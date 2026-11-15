@@ -2,7 +2,7 @@ import time
 import logging
 from pathlib import Path
 from typing import Dict, Any, List, Tuple, Optional
-import pandas as pd
+import gc
 
 from bot.utils.validator import normalize_column_name, validate_row
 
@@ -32,6 +32,7 @@ def parse_import_file(file_path: Path, max_rows: int = 50000) -> ImportResult:
     Parse and validate questions from an Excel (.xlsx) or CSV file.
     Supports 10,000+ questions with high performance.
     """
+    import pandas as pd
     start_time = time.time()
     file_path = Path(file_path)
     result = ImportResult(file_path.name)
@@ -110,10 +111,16 @@ def parse_import_file(file_path: Path, max_rows: int = 50000) -> ImportResult:
         f"Parsed {file_path.name}: {result.valid_count} valid, "
         f"{result.invalid_count} invalid, {result.duplicate_count} dups in {result.duration_seconds}s"
     )
+    try:
+        del df
+    except Exception:
+        pass
+    gc.collect()
     return result
 
 def create_sample_excel_template(target_path: Path) -> Path:
     """Generate sample Excel file with sample questions in English and Uzbek."""
+    import pandas as pd
     target_path = Path(target_path)
     target_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -193,6 +200,7 @@ def create_sample_excel_template(target_path: Path) -> Path:
 
 def create_sample_csv_template(target_path: Path) -> Path:
     """Generate sample CSV file with UTF-8 encoding."""
+    import csv
     target_path = Path(target_path)
     target_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -225,6 +233,10 @@ def create_sample_csv_template(target_path: Path) -> Path:
         }
     ]
 
-    df = pd.DataFrame(data)
-    df.to_csv(target_path, index=False, encoding="utf-8-sig")
+    fieldnames = list(data[0].keys())
+    with open(target_path, "w", newline="", encoding="utf-8-sig") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(data)
+
     return target_path

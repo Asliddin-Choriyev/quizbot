@@ -1,12 +1,13 @@
 from pathlib import Path
 from typing import List, Dict, Any
-import pandas as pd
 from datetime import datetime
+import gc
 
 def export_quiz_results_to_excel(quiz_title: str, results: List[Dict[str, Any]], output_dir: Path) -> Path:
     """
     Export quiz participant results to a formatted Excel file.
     """
+    import pandas as pd
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     
@@ -53,6 +54,7 @@ def export_quiz_results_to_excel(quiz_title: str, results: List[Dict[str, Any]],
             col_letter = col[0].column_letter
             worksheet.column_dimensions[col_letter].width = max(max_len + 4, 12)
 
+    gc.collect()
     return file_path
 
 
@@ -60,6 +62,7 @@ def export_all_users_to_excel(users: List[Dict[str, Any]], output_dir: Path) -> 
     """
     Export all bot users and their aggregate exam statistics to an Excel file.
     """
+    import pandas as pd
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     
@@ -103,4 +106,5 @@ def export_all_users_to_excel(users: List[Dict[str, Any]], output_dir: Path) -> 
             col_letter = col[0].column_letter
             worksheet.column_dimensions[col_letter].width = max(max_len + 4, 12)
 
+    gc.collect()
     return file_path

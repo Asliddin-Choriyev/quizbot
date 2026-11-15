@@ -12,6 +12,8 @@ PRAGMA foreign_keys = ON;
 PRAGMA journal_mode = WAL;
 PRAGMA synchronous = NORMAL;
 PRAGMA busy_timeout = 5000;
+PRAGMA cache_size = -2048;
+PRAGMA temp_store = MEMORY;
 
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
