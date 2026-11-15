@@ -216,6 +216,18 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
         "en": "👤 <b>User Details</b>\n\n🆔 User ID: <code>{telegram_id}</code>\n👤 Telegram: {tg_name} {username}\n📝 Full Name: <b>{real_name}</b>\n🎓 Group: <b>{student_group}</b>\n📱 Phone: <b>{phone_number}</b>\n🌐 Language: <b>{user_lang}</b>\n📅 Joined: <b>{created_at}</b>\n\n📊 <b>Exam Statistics:</b>\n• Total Tests Taken: <b>{total_attempts}</b>\n• Passed Tests: <b>{passed_count}</b>\n• Average Score: <b>{avg_score}%</b>\n• Last Active: <b>{last_active}</b>",
         "uz": "👤 <b>Foydalanuvchi Ma'lumotlari</b>\n\n🆔 Foydalanuvchi ID: <code>{telegram_id}</code>\n👤 Telegram: {tg_name} {username}\n📝 F.I.SH.: <b>{real_name}</b>\n🎓 Guruh: <b>{student_group}</b>\n📱 Telefon: <b>{phone_number}</b>\n🌐 Til: <b>{user_lang}</b>\n📅 Ro'yxatdan o'tgan: <b>{created_at}</b>\n\n📊 <b>Imtihon Statistikasi:</b>\n• Jami topshirilgan testlar: <b>{total_attempts}</b> ta\n• O'tilgan testlar: <b>{passed_count}</b> ta\n• O'rtacha natija: <b>{avg_score}%</b>\n• Oxirgi faollik: <b>{last_active}</b>"
     },
+    "admin_delete_user_confirm": {
+        "en": "⚠️ <b>Are you sure you want to delete this user?</b>\n\n👤 <b>{name}</b> (ID: <code>{user_id}</code>)\n\n<i>Warning: All test attempts, scores, and statistics of this user will be permanently deleted!</i>",
+        "uz": "⚠️ <b>Haqiqatan ham ushbu foydalanuvchini o'chirmoqchimisiz?</b>\n\n👤 <b>{name}</b> (ID: <code>{user_id}</code>)\n\n<i>Diqqat: Ushbu foydalanuvchining barcha topshirgan testlari va statistikasi butunlay o'chiriladi!</i>"
+    },
+    "admin_user_deleted": {
+        "en": "🗑 User has been deleted successfully.",
+        "uz": "🗑 Foydalanuvchi muvaffaqiyatli o'chirildi."
+    },
+    "admin_cannot_delete_admin": {
+        "en": "⛔ Administrator account cannot be deleted!",
+        "uz": "⛔ Administrator foydalanuvchini o'chirib bo'lmaydi!"
+    },
     "btn_admin_quizzes": {
         "en": "📋 Manage Quizzes",
         "uz": "📋 Testlarni boshqarish"

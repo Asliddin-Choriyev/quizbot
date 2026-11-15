@@ -322,3 +322,12 @@ async def test_user_profile_and_management(tmp_path: Path):
         export_data = await queries.get_all_users_export_data(conn)
         assert len(export_data) == 1
         assert export_data[0]["real_name"] == "Bobur Karimov"
+
+        # Test delete user
+        deleted = await queries.delete_user(conn, 99999)
+        assert deleted is True
+
+        user_after = await queries.get_user(conn, 99999)
+        assert user_after is None
+        total_after = await queries.count_users(conn)
+        assert total_after == 0

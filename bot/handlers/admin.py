@@ -25,7 +25,8 @@ from bot.keyboards.inline import (
     get_admin_delete_confirm_kb,
     get_import_confirm_kb,
     get_admin_users_kb,
-    get_admin_user_detail_kb
+    get_admin_user_detail_kb,
+    get_admin_user_delete_confirm_kb
 )
 from bot.services.importer import (
     parse_import_file,
@@ -763,7 +764,8 @@ async def cb_admin_user_view(callback: CallbackQuery, db: Database, is_admin: bo
             last_active=last_act
         )
 
-        kb = get_admin_user_detail_kb(user_id, lang=lang)
+        is_target_admin = config.is_admin(user_id)
+        kb = get_admin_user_detail_kb(user_id, is_target_admin=is_target_admin, lang=lang)
         try:
             await callback.message.edit_text(text, reply_markup=kb, parse_mode="HTML")
         except Exception:
@@ -776,6 +778,59 @@ async def cb_admin_user_view(callback: CallbackQuery, db: Database, is_admin: bo
             await callback.answer()
         except Exception:
             pass
+
+@router.callback_query(F.data.startswith("adm:del_user_conf:"))
+async def cb_admin_del_user_conf(callback: CallbackQuery, db: Database, is_admin: bool = False, lang: str = "uz"):
+    if not is_admin:
+        await callback.answer(t("admin_not_authorized", lang), show_alert=True)
+        return
+
+    user_id = int(callback.data.split(":")[2])
+    if config.is_admin(user_id):
+        await callback.answer(t("admin_cannot_delete_admin", lang), show_alert=True)
+        return
+
+    async with db.get_connection() as conn:
+        user = await queries.get_user(conn, user_id)
+
+    if not user:
+        await callback.answer("User not found.", show_alert=True)
+        return
+
+    name = user.real_name or f"{user.first_name or ''} {user.last_name or ''}".strip() or (f"@{user.username}" if user.username else f"User {user.telegram_id}")
+    text = t("admin_delete_user_confirm", lang, name=escape_html(name), user_id=user.telegram_id)
+    kb = get_admin_user_delete_confirm_kb(user_id, lang=lang)
+
+    try:
+        await callback.message.edit_text(text, reply_markup=kb, parse_mode="HTML")
+    except Exception:
+        await callback.message.answer(text, reply_markup=kb, parse_mode="HTML")
+    await callback.answer()
+
+@router.callback_query(F.data.startswith("adm:del_user_do:"))
+async def cb_admin_del_user_do(callback: CallbackQuery, db: Database, is_admin: bool = False, lang: str = "uz"):
+    if not is_admin:
+        await callback.answer(t("admin_not_authorized", lang), show_alert=True)
+        return
+
+    user_id = int(callback.data.split(":")[2])
+    if config.is_admin(user_id):
+        await callback.answer(t("admin_cannot_delete_admin", lang), show_alert=True)
+        return
+
+    async with db.get_connection() as conn:
+        await queries.delete_user(conn, user_id)
+        users, total = await queries.list_users(conn, page=0, page_size=8)
+
+    await callback.answer(t("admin_user_deleted", lang), show_alert=True)
+
+    text = t("admin_users_title", lang, total=total)
+    kb = get_admin_users_kb(users, page=0, total=total, page_size=8, lang=lang)
+
+    try:
+        await callback.message.edit_text(text, reply_markup=kb, parse_mode="HTML")
+    except Exception:
+        await callback.message.answer(text, reply_markup=kb, parse_mode="HTML")
 
 @router.callback_query(F.data == "adm:export_users")
 async def cb_admin_export_users(callback: CallbackQuery, db: Database, is_admin: bool = False, lang: str = "uz"):

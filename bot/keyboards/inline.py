@@ -236,11 +236,24 @@ def get_admin_users_kb(users: list, page: int = 0, total: int = 0, page_size: in
     rows.append([InlineKeyboardButton(text="◀️ Admin Menu", callback_data="adm:menu")])
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
-def get_admin_user_detail_kb(user_id: int, lang: str = "uz") -> InlineKeyboardMarkup:
+def get_admin_user_detail_kb(user_id: int, is_target_admin: bool = False, lang: str = "uz") -> InlineKeyboardMarkup:
+    del_btn = "🗑 Foydalanuvchini o'chirish" if lang == "uz" else "🗑 Delete User"
     back_btn = "◀️ Foydalanuvchilar ro'yxati" if lang == "uz" else "◀️ Users List"
+    buttons = []
+    if not is_target_admin:
+        buttons.append([InlineKeyboardButton(text=del_btn, callback_data=f"adm:del_user_conf:{user_id}")])
+    buttons.append([InlineKeyboardButton(text=back_btn, callback_data="adm:users:0")])
+    return InlineKeyboardMarkup(inline_keyboard=buttons)
+
+def get_admin_user_delete_confirm_kb(user_id: int, lang: str = "uz") -> InlineKeyboardMarkup:
+    yes_btn = "🗑 Ha, o'chirilsin" if lang == "uz" else "🗑 Yes, delete"
+    cancel_btn = t("btn_cancel", lang)
     return InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text=back_btn, callback_data="adm:users:0")]
+            [
+                InlineKeyboardButton(text=yes_btn, callback_data=f"adm:del_user_do:{user_id}"),
+                InlineKeyboardButton(text=cancel_btn, callback_data=f"adm:user_view:{user_id}")
+            ]
         ]
     )
 

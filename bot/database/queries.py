@@ -227,6 +227,24 @@ async def count_users(conn: aiosqlite.Connection) -> int:
         row = await cursor.fetchone()
         return row[0] if row else 0
 
+async def delete_user(conn: aiosqlite.Connection, telegram_id: int) -> bool:
+    await conn.execute("PRAGMA foreign_keys = ON;")
+    # Cascading cleanup
+    await conn.execute(
+        """
+        DELETE FROM session_answers 
+        WHERE session_id IN (SELECT id FROM quiz_sessions WHERE user_id = ?)
+           OR user_id = ?
+        """,
+        (telegram_id, telegram_id)
+    )
+    await conn.execute("DELETE FROM quiz_sessions WHERE user_id = ?", (telegram_id,))
+    await conn.execute("DELETE FROM group_answers WHERE user_id = ?", (telegram_id,))
+    await conn.execute("DELETE FROM group_participants WHERE user_id = ?", (telegram_id,))
+    await conn.execute("DELETE FROM users WHERE telegram_id = ?", (telegram_id,))
+    await conn.commit()
+    return True
+
 # ==========================================
 # QUIZ QUERIES
 # ==========================================
