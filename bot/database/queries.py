@@ -144,19 +144,22 @@ async def get_user_stats(conn: aiosqlite.Connection, telegram_id: int) -> Dict[s
 async def list_users(
     conn: aiosqlite.Connection,
     page: int = 0,
-    page_size: int = 8
+    page_size: int = 8,
+    exclude_admins: bool = True
 ) -> Tuple[List[Dict[str, Any]], int]:
     conn.row_factory = aiosqlite.Row
-    total = await count_users(conn)
+    total = await count_users(conn, exclude_admins=exclude_admins)
     offset = page * page_size
+    where_clause = "WHERE u.is_admin = 0" if exclude_admins else ""
     async with conn.execute(
-        """
+        f"""
         SELECT 
             u.*,
             COUNT(qs.id) as total_attempts,
             AVG(qs.score_percentage) as avg_score
         FROM users u
         LEFT JOIN quiz_sessions qs ON u.telegram_id = qs.user_id AND qs.status = 'completed'
+        {where_clause}
         GROUP BY u.id
         ORDER BY u.id DESC
         LIMIT ? OFFSET ?
@@ -186,10 +189,11 @@ async def get_user_details(conn: aiosqlite.Connection, telegram_id: int) -> Opti
         row = await cursor.fetchone()
         return dict(row) if row else None
 
-async def get_all_users_export_data(conn: aiosqlite.Connection) -> List[Dict[str, Any]]:
+async def get_all_users_export_data(conn: aiosqlite.Connection, exclude_admins: bool = True) -> List[Dict[str, Any]]:
     conn.row_factory = aiosqlite.Row
+    where_clause = "WHERE u.is_admin = 0" if exclude_admins else ""
     async with conn.execute(
-        """
+        f"""
         SELECT 
             u.id,
             u.telegram_id,
@@ -207,6 +211,7 @@ async def get_all_users_export_data(conn: aiosqlite.Connection) -> List[Dict[str
             MAX(qs.start_time) as last_active
         FROM users u
         LEFT JOIN quiz_sessions qs ON u.telegram_id = qs.user_id AND qs.status = 'completed'
+        {where_clause}
         GROUP BY u.id
         ORDER BY u.id ASC
         """
@@ -222,8 +227,9 @@ async def set_user_language(conn: aiosqlite.Connection, telegram_id: int, langua
     await conn.commit()
     return True
 
-async def count_users(conn: aiosqlite.Connection) -> int:
-    async with conn.execute("SELECT COUNT(*) FROM users") as cursor:
+async def count_users(conn: aiosqlite.Connection, exclude_admins: bool = True) -> int:
+    sql = "SELECT COUNT(*) FROM users WHERE is_admin = 0" if exclude_admins else "SELECT COUNT(*) FROM users"
+    async with conn.execute(sql) as cursor:
         row = await cursor.fetchone()
         return row[0] if row else 0
 
@@ -830,7 +836,7 @@ async def get_quiz_leaderboard(
             COUNT(qs.id) as attempts
         FROM quiz_sessions qs
         JOIN users u ON qs.user_id = u.telegram_id
-        WHERE qs.quiz_id = ? AND qs.status = 'completed'
+        WHERE qs.quiz_id = ? AND qs.status = 'completed' AND u.is_admin = 0
         GROUP BY qs.user_id
         ORDER BY best_score DESC, best_duration ASC
         LIMIT ?
@@ -1071,7 +1077,7 @@ async def get_all_results_for_export(conn: aiosqlite.Connection, quiz_id: int) -
             qs.end_time
         FROM quiz_sessions qs
         JOIN users u ON qs.user_id = u.telegram_id
-        WHERE qs.quiz_id = ? AND qs.status = 'completed'
+        WHERE qs.quiz_id = ? AND qs.status = 'completed' AND u.is_admin = 0
         ORDER BY qs.score_percentage DESC, qs.duration_seconds ASC
         """,
         (quiz_id,)
