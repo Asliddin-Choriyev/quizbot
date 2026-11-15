@@ -1,0 +1,767 @@
+OQSILLAR VA AMINOKISLOTALAR ALMASHINUVI — SAVOL VA JAVOBLAR
+======================================================================
+
+1-SAVOL: Valin qanday aminokislotalar guruhiga kiradi?
+  A) Almashinadigan aminokislota
+  B) Almashinmaydigan (muhim) aminokislota
+  C) Qisman almashinadigan aminokislota
+  D) Faqat o'simliklarda uchraydigan aminokislota
+  TO'G'RI JAVOB: B
+  IZOH: Valin inson tanasida sintezlanmaydi, faqat oziq-ovqat bilan tushishi shart bo'lgan almashtirib bo'lmaydigan (muhim) aminokislotadir.
+--------------------------------------------------
+
+2-SAVOL: Battler − Olbrayt sindromi qanday metabolik buzilish bilan bog'liq?
+  A) Ammoniy tuzlari (ammoniy ajralishi) buzilishi bilan (buyrak tubulyar atsidozi)
+  B) Mochevina sintezining to'xtashi bilan
+  C) Xolesterin so'rilishining buzilishi bilan
+  D) Glikogen parchalanishining ortishi bilan
+  TO'G'RI JAVOB: A
+  IZOH: Battler-Olbrayt sindromi buyrak kanalchalari atsidozi va ammiak/ammoniy tuzlari ekskretsiyasining buzilishi bilan bog'liq.
+--------------------------------------------------
+
+3-SAVOL: Alkaptonuriya kasalligi qaysi aminokislota almashinuvining buzilishi bilan bog'liq?
+  A) Triptofan almashinuvi
+  B) Tirozin almashinuvining buzilishi bilan bog'liq irsiy kasallik
+  C) Valin va leysin sintezi
+  D) Sistein transporti
+  TO'G'RI JAVOB: B
+  IZOH: Alkaptonuriya — tirozin va fenilalanin almashinuvidagi gomogentizat-1,2-dioksigenaza fermenti yetishmovchiligi tufayli kelib chiquvchi irsiy kasallik.
+--------------------------------------------------
+
+4-SAVOL: Digidropteridinreduktaza fermentining irsiy nuqsoni qaysi kasallikka sabab bo'ladi?
+  A) Fenilketonuriya (variantli / atipik shakli)
+  B) Albinizm
+  C) Alkaptonuriya
+  D) Gistidinemiya
+  TO'G'RI JAVOB: A
+  IZOH: Digidropteridinreduktaza BH4 (tetragidrobiopterin) kofaktorini qaytarish uchun kerak bo'lib, uning yetishmovchiligi atipik fenilketonuriyani keltirib chiqaradi.
+--------------------------------------------------
+
+5-SAVOL: Metilmalonil-KoA-mutaza fermentining irsiy nuqsoni qanday oqibatga olib keladi?
+  A) Metilmalonik atsiduriya kasalligiga sabab bo'ladi
+  B) Fenilketonuriyaga sabab bo'ladi
+  C) Alkaptonuriyaga sabab bo'ladi
+  D) Izovalerian atsiduriyasiga sabab bo'ladi
+  TO'G'RI JAVOB: A
+  IZOH: Metilmalonil-KoA-mutaza (B12 vitaminiga bog'liq) nuqsonida organizmda metilmalon kislotasi to'planib, og'ir atsiduriyaga sabab bo'ladi.
+--------------------------------------------------
+
+6-SAVOL: Tripsinogen tripsinga qaysi ferment ta'sirida aylanadi?
+  A) Pepsin ta'sirida
+  B) Gastriksin ta'sirida
+  C) Enterokinaza (enteropeptidaza) ta'sirida
+  D) Ximotripsin ta'sirida
+  TO'G'RI JAVOB: C
+  IZOH: O'n ikki barmoqli ichak shilliq qavati ishlab chiqaradigan enterokinaza (enteropeptidaza) tripsinogenni aktiv tripsinga aylantiradi.
+--------------------------------------------------
+
+7-SAVOL: Xartnup kasalligi qaysi aminokislota almashinuvi buzilganda rivojlanadi?
+  A) Triptofan almashinuvi buzilganda
+  B) Glitsin almashinuvi buzilganda
+  C) Fenilalanin almashinuvi buzilganda
+  D) Metionin almashinuvi buzilganda
+  TO'G'RI JAVOB: A
+  IZOH: Xartnup kasalligi triptofanning ichakda so'rilishi va buyraklarda reabsorbsiyasining irsiy buzilishi oqibatida rivojlanadi.
+--------------------------------------------------
+
+8-SAVOL: GAMK (γ-aminomoy kislota) qaysi aminokislotaning dekarboksillanishi natijasida hosil bo'ladi?
+  A) Asparagin kislotasidan
+  B) Glutamin (glutamat) kislotasidan
+  C) Tirozindan
+  D) Gistidindan
+  TO'G'RI JAVOB: B
+  IZOH: Glutamat kislotasi glutamatdekarboksilaza fermenti ta'sirida dekarboksillanib GAMK hosil qiladi.
+--------------------------------------------------
+
+9-SAVOL: Qon tomirlarni toraytiruvchi ta'sirga ega bo'lgan biogen amin qaysi?
+  A) Gistamin
+  B) Alanin
+  C) Serotonin
+  D) Glitsin
+  TO'G'RI JAVOB: C
+  IZOH: Serotonin qon tomirlarni toraytiruvchi (vazokonstriktor) ta'sirga ega kuchli biogen amindir.
+--------------------------------------------------
+
+10-SAVOL: Glikogen aminokislotalar katabolizmida nima orqali glyukozaga aylanishi mumkin?
+  A) Katabolizmda piruvatga (yoki Krebs sikli metabolitlariga) aylanadi
+  B) Asetoatsetatga aylanadi
+  C) Xolesteringa aylanadi
+  D) Yog' kislotalariga aylanadi
+  TO'G'RI JAVOB: A
+  IZOH: Glikogen aminokislotalar piruvat yoki Krebs sikli oraliq moddalariga aylanib, glyukoneogenezda glyukoza hosil qiladi.
+--------------------------------------------------
+
+11-SAVOL: Miyaning qora moddasida dofamin yetishmovchiligi qaysi kasallikka olib keladi?
+  A) Parkinson kasalligiga olib keladi
+  B) Altsgeymer kasalligiga
+  C) Epilepsiyaga
+  D) Xoreyaga
+  TO'G'RI JAVOB: A
+  IZOH: Substantia nigra neyronlarining nobud bo'lishi va dofamin yetishmovchiligi Parkinson kasalligiga sabab bo'ladi.
+--------------------------------------------------
+
+12-SAVOL: Fosfatidilxolin va sfingomiyelin sintezida umumiy o'tmishdosh modda qaysi?
+  A) ATF
+  B) TsDF-xolin
+  C) S-adenozilmetionin
+  D) Asetil-KoA
+  TO'G'RI JAVOB: B
+  IZOH: TsDF-xolin (sitidindifosfat xolin) ham fosfatidilxolin, ham sfingomiyelin sintezida faollashgan xolin donori hisoblanadi.
+--------------------------------------------------
+
+13-SAVOL: Inson organizmida xolesterin sintezi eng faol ravishda qayerda amalga oshiriladi?
+  A) Buyraklarda va taloqda
+  B) Skelet mushaklarida
+  C) Ichakda (jigar bilan birga)
+  D) Faqat miyada
+  TO'G'RI JAVOB: C
+  IZOH: Endogen xolesterinning asosiy qismi jigar va ingichka ichak shilliq qavatida sintezlanadi.
+--------------------------------------------------
+
+14-SAVOL: Quyidagi moddalardan qaysi birining kashshofida xolesterin yo'q?
+  A) Prostaglandinlar (kashshofi — arakidon kislota)
+  B) D3 vitamini (kashshofi — 7-degidroxolesterol)
+  C) O't kislotalari
+  D) Kortizol gormoni
+  TO'G'RI JAVOB: A
+  IZOH: Prostaglandinlar arakidon kislotasidan hosil bo'ladi. D vitamini, o't kislotalari va steroidlar esa xolesterindan hosil bo'ladi.
+--------------------------------------------------
+
+15-SAVOL: Xolesterin sintezining asosiy tartibga soluvchi (tezlikni belgilovchi) fermenti qaysi?
+  A) Xolesterinesteraza
+  B) Gidroksimetilglutaril-KoA-reduktaza (GMG-KoA-reduktaza)
+  C) Lesitin-xolesterol-atsiltransferaza
+  D) Squalen-sintaza
+  TO'G'RI JAVOB: B
+  IZOH: Gidroksimetilglutaril-KoA-reduktaza xolesterin biosintezidagi asosiy tezlikni cheklovchi tartibga soluvchi fermentdir.
+--------------------------------------------------
+
+16-SAVOL: Yo'g'on ichak mikroflorasi ta'sirida triptofandan qanday zaharli mahsulot hosil bo'ladi?
+  A) Krezol va fenol
+  B) Indol va skatol
+  C) Kadaverin va putresin
+  D) Mochevina va siydik kislotasi
+  TO'G'RI JAVOB: B
+  IZOH: Triptofanning ichakda chirishi natijasida indol va skatol, tirozindan esa fenol va krezol hosil bo'ladi.
+--------------------------------------------------
+
+17-SAVOL: Tanada ammiakning to'qimalardan jigarga toksik bo'lmagan asosiy transport shakli nima?
+  A) Erkin ammiak gazi
+  B) Mochevina
+  C) Glutamin (shuningdek, mushaklardan jigarga alanin)
+  D) Kreatinin
+  TO'G'RI JAVOB: C
+  IZOH: Ammiak to'qimalarda glutamat bilan birikib zararsiz glutamin hosil qiladi va qon orqali jigarga tashiladi.
+--------------------------------------------------
+
+18-SAVOL: Karbamid (mochevina) molekulasidagi ikkita azot atomining manbalari nimalar?
+  A) Biri ammiak (karbamoilfosfat tarkibida), ikkinchisi asparagin kislotasi aminoguruhi
+  B) Ikkala azot atomi ham erkin ammiakdan
+  C) Biri glutamindan, ikkinchisi glitsindan
+  D) Biri arginindan, ikkinchisi ornitindan
+  TO'G'RI JAVOB: A
+  IZOH: Mochevinadagi bitta azot karbamoilfosfatdan (ammiak), ikkinchi azot esa aspartat aminoguruhidan olinadi.
+--------------------------------------------------
+
+19-SAVOL: Serin va glitsinning o'zaro konversiyasi qaysi vitaminlarning ichakdagi normal so'rilishiga bog'liq?
+  A) Vitamin C va vitamin D
+  B) Foliy kislotasi (B9 — tetragidrofolat) va piridoksin (B6)
+  C) Vitamin A va vitamin E
+  D) Vitamin B1 va vitamin B12
+  TO'G'RI JAVOB: B
+  IZOH: Serin-gidroksimetiltransferaza fermenti B6 (piridoksalfosfat) va B9 (tetragidrofolat) ishtirokida ishlaydi.
+--------------------------------------------------
+
+20-SAVOL: Tripsin qaysi aminokislotalar hosil qilgan peptid bog'larini gidrolizlaydi?
+  A) Lizin va arginin aminokislotalarining karboksil guruhlari hosil qilgan bog'larni
+  B) Tirozin va fenilalanin hosil qilgan bog'larni
+  C) Glitsin va alanin hosil qilgan bog'larni
+  D) Aspartat va glutamat hosil qilgan bog'larni
+  TO'G'RI JAVOB: A
+  IZOH: Tripsin asosli aminokislotalar — lizin va argininning karboksil guruhi ishtirok etgan peptid bog'larini uzadi.
+--------------------------------------------------
+
+21-SAVOL: Ximotripsin qaysi aminokislotalar hosil qilgan peptid bog'larini gidrolizlaydi?
+  A) Lizin va arginin hosil qilgan bog'larni
+  B) Tirozin, fenilalanin va triptofanning karboksil guruhlari hosil qilgan bog'larni
+  C) Prolin va gidroksiprolin bog'larini
+  D) Metionin va sistein bog'larini
+  TO'G'RI JAVOB: B
+  IZOH: Ximotripsin aromatik aminokislotalar (tirozin, fenilalanin, triptofan) ning karboksil guruhi hosil qilgan bog'larni uzadi.
+--------------------------------------------------
+
+22-SAVOL: Karboksipeptidaza A qaysi aminokislotalar hosil qilgan peptid bog'larini gidrolizlaydi?
+  A) Polipeptid zanjirning C-uchidagi aromatik va alifatik aminokislotalar hosil qilgan bog'larni
+  B) Polipeptid zanjirning N-uchidagi aminokislotalarni
+  C) Zanjir o'rtasidagi asosli aminokislotalarni
+  D) Faqat lizin va arginin bog'larini
+  TO'G'RI JAVOB: A
+  IZOH: Karboksipeptidaza A polipeptid zanjirining C-uchidan aromatik va alifatik aminokislotalarni ajratadi.
+--------------------------------------------------
+
+23-SAVOL: Transaminlanish reaksiyasi nima?
+  A) Aminoguruhni aminokislotadan erkin NH3 sifatida ajratish
+  B) Aminoguruhni aminokislotadan α-ketokislotaga ko'chirish (erkin NH3 hosil bo'lmasdan)
+  C) Karboksil guruhining CO2 sifatida ajralishi
+  D) Peptid bog'larining suv birikishi bilan uzilishi
+  TO'G'RI JAVOB: B
+  IZOH: Transaminlanish — aminotransferaza fermenti (kofermenti B6 — piridoksalfosfat) ishtirokida aminoguruhning α-ketokislotaga ko'chirilishi jarayonidir.
+--------------------------------------------------
+
+24-SAVOL: Biogen aminlar aminokislotalardan qaysi reaksiya natijasida hosil bo'ladi?
+  A) Transaminlanish reaksiyasi natijasida
+  B) Dekarboksillanish reaksiyasi natijasida
+  C) Oksidlovchi dezaminlanish natijasida
+  D) Gidroksillanish reaksiyasi natijasida
+  TO'G'RI JAVOB: B
+  IZOH: Aminokislotalar dekarboksilaza fermentlari ta'sirida karboksil guruhini (-COOH) CO2 ko'rinishida yo'qotib biogen aminlar hosil qiladi.
+--------------------------------------------------
+
+25-SAVOL: Biogen aminlarning inaktivatsiyasini qaysi fermentlar amalga oshiradi?
+  A) Monoaminoksidaza (MAO) va diaminoksidaza (DAO)
+  B) Transaminaza va karboksilaza
+  C) Pepsin va tripsin
+  D) Laktatdegidrogenaza va amilaza
+  TO'G'RI JAVOB: A
+  IZOH: Biogen aminlar MAO va DAO fermentlari ishtirokida oksidlovchi dezaminlanish orqali zararsizlantiriladi.
+--------------------------------------------------
+
+26-SAVOL: Tormozlovchi neyrotransmitter γ-aminomoy kislota qaysi aminokislotaning dekarboksillanishidan hosil bo'ladi?
+  A) Glitsindan
+  B) Glutamin (glutamat) kislotasidan
+  C) Asparagin kislotasidan
+  D) Tirozindan
+  TO'G'RI JAVOB: B
+  IZOH: Glutamat kislotasi B6 kofermenti ishtirokida dekarboksillanib, GAMK (GABA) hosil qiladi.
+--------------------------------------------------
+
+27-SAVOL: Fenilalanin organizmda qaysi birikmalarni sintez qilishda ishtirok etadi?
+  A) Tirozin, katexolaminlar (dofamin, noradrenalin, adrenalin), tireoid gormonlar va melanin
+  B) Faqat xolesterin va yog' kislotalari
+  C) Gemoglobin va mioglobinning oqsil bo'lmagan qismi
+  D) Faqat o't kislotalari
+  TO'G'RI JAVOB: A
+  IZOH: Fenilalanin dastlab tirozinga aylanadi, undan esa katexolaminlar, qalqonsimon bez gormonlari va melanin pigmenti sintezlanadi.
+--------------------------------------------------
+
+28-SAVOL: Ba'zi almashinadigan aminokislotalar inson tanasida qanday sintezlanadi?
+  A) Uglevod va lipidlar almashinuvi mahsulotlaridan (α-ketokislotalardan transaminlanish orqali)
+  B) Faqat nuklein kislotalar parchalanishidan
+  C) To'g'ridan-to'g'ri molekulyar azotni fiksatsiya qilish orqali
+  D) Faqat vitaminlarning o'zgarishi orqali
+  TO'G'RI JAVOB: A
+  IZOH: Glikoliz va Krebs siklining oraliq α-ketokislotalari transaminlanish orqali mos almashinadigan aminokislotalarga aylanadi.
+--------------------------------------------------
+
+29-SAVOL: Tananing qaysi holatida ijobiy azot balansi kuzatiladi?
+  A) O'sish davrida, homiladorlik va laktatsiyada, kasallikdan tuzalish davrida
+  B) Och qolganda va oqsilsiz parhezda
+  C) Og'ir kuyish va jarohatlarda
+  D) Qarilikda va kaxeksiyada
+  TO'G'RI JAVOB: A
+  IZOH: Oqsil sintezi uning parchalanishidan ustun bo'lgan holatlarda ijobiy azot balansi kuzatiladi.
+--------------------------------------------------
+
+30-SAVOL: Tananing qaysi holatida salbiy azot balansi kuzatiladi?
+  A) Bolalarning tez o'sish davrida
+  B) Homiladorlik davrida
+  C) Och qolganda, oqsilsiz parhezda, og'ir kasalliklar, kuyish, jarohat va qarilikda
+  D) Mushak massasini oshirish mashg'ulotlarida
+  TO'G'RI JAVOB: C
+  IZOH: Oqsil parchalanishi sintezdan oshib ketganda va oqsil tanqisligida salbiy azot balansi vujudga keladi.
+--------------------------------------------------
+
+31-SAVOL: Yangi tug'ilgan chaqaloqlarda oshqozonda oqsillar gidrolizini nima katalizlaydi?
+  A) Tripsin va elastaza
+  B) Rennin (ximozin) va gastriksin
+  C) Faqat pepsin A
+  D) Aminopeptidaza va karboksipeptidaza
+  TO'G'RI JAVOB: B
+  IZOH: Chaqaloqlarda sut oqsili kazeinni iviydigan asosiy ferment rennin (ximozin) hisoblanadi.
+--------------------------------------------------
+
+32-SAVOL: Katta yoshdagi odamlar oshqozonida oqsillar gidrolizini nima katalizlaydi?
+  A) Pepsin (va gastriksin), xlorid kislota ishtirokida
+  B) Enterokinaza va tripsin
+  C) Faqat oshqozon amilazasi
+  D) Faqat ximotripsin
+  TO'G'RI JAVOB: A
+  IZOH: Pepsinogen HCl ta'sirida pepsinga aylanib, oshqozonda oqsillarni polipeptidlargacha parchalaydi.
+--------------------------------------------------
+
+33-SAVOL: Ingichka ichakdagi oqsillar gidrolizini qaysi fermentlar majmuasi katalizlaydi?
+  A) Tripsin, ximotripsin, elastaza, karboksipeptidaza A va B, aminopeptidaza, dipeptidazalar
+  B) Faqat pepsin va rennin
+  C) Faqat oshqozon osti bezi lipazasi
+  D) Pepsin va xlorid kislota
+  TO'G'RI JAVOB: A
+  IZOH: Ichakda oshqozon osti bezi va ichak shirasining endo- va ekzopeptidazalari oqsillarni erkin aminokislotalargacha parchalaydi.
+--------------------------------------------------
+
+34-SAVOL: Kattalar uchun almashtiriladigan va bolalar uchun qisman almashtiriladigan aminokislotalarni ko'rsating:
+  A) Valin, leysin, izoleysin
+  B) Arginin, tirozin va gistidin
+  C) Glitsin va alanin
+  D) Faqat prolin
+  TO'G'RI JAVOB: B
+  IZOH: Arginin va gistidin bolalarning o'suvchi organizmida yetarli darajada sintezlanmaydi, shuning uchun qisman almashtirib bo'lmaydi.
+--------------------------------------------------
+
+35-SAVOL: Bolalarda oqsil yetishmovchiligi tufayli qanday og'ir kasallik rivojlanadi?
+  A) Kvashiorkor (oqsil yetishmovchiligi: o'sishdan to'xtash, shishlar, anemiya)
+  B) Pellagra
+  C) Raxit
+  D) Skorbut
+  TO'G'RI JAVOB: A
+  IZOH: Kvashiorkor oziq-ovqatda oqsil tanqis bo'lganda rivojlanuvchi kasallik bo'lib, gipoproteinemiya, shishlar va jigar distrofiyasi bilan kechadi.
+--------------------------------------------------
+
+36-SAVOL: Yangi tug'ilgan chaqaloqlarda me'da shirasi qanday pH ga ega?
+  A) pH 1,0–1,5
+  B) Taxminan pH 5,0–6,0 (kuchsiz kislotali, neytralga yaqin)
+  C) pH 8,0–9,0
+  D) Mutlaq neytral pH 7,0
+  TO'G'RI JAVOB: B
+  IZOH: Chaqaloqlarda oshqozon kislotaligi past (pH 5,0–6,0) bo'lib, keyinchalik kislotalik ortib 1,5–2,0 ga yetadi.
+--------------------------------------------------
+
+37-SAVOL: Ornitin siklining buzilishi bilan qanday irsiy kasalliklar bog'liq?
+  A) Sitrullinemiya, argininsuksinat atsiduriya, giperammoniemiya (I va II tur)
+  B) Alkaptonuriya va albinizm
+  C) Fenilketonuriya va sistinoz
+  D) Podagra va diabet
+  TO'G'RI JAVOB: A
+  IZOH: Mochevina hosil bo'lish sikli fermentlari defektida oraliq birikmalar (sitrullin, argininsuksinat) va ammiak qonda ortadi.
+--------------------------------------------------
+
+38-SAVOL: Tirozin almashinuvining buzilishi bilan bog'liq irsiy kasalliklarni ko'rsating:
+  A) Kvashiorkor va kaxeksiya
+  B) Alkaptonuriya, albinizm, tirozinemiya
+  C) Gomosistinuriya va sistinuriya
+  D) Glitsinoz va glitsinuriya
+  TO'G'RI JAVOB: B
+  IZOH: Tirozin katabolizmi buzilishi alkaptonuriya, tirozinemiya va melanin sintezi buzilishi albinizmga olib keladi.
+--------------------------------------------------
+
+39-SAVOL: Ekzopeptidazalarga quyidagilar kiradi:
+  A) Pepsin va tripsin
+  B) Karboksipeptidaza A va B, aminopeptidazalar (peptidning uchidan uzadi)
+  C) Ximotripsin va elastaza
+  D) Faqat gastriksin
+  TO'G'RI JAVOB: B
+  IZOH: Ekzopeptidazalar peptid zanjirining uchlaridan bittalab aminokislota ajratib oladi.
+--------------------------------------------------
+
+40-SAVOL: Endopeptidazalarga quyidagi fermentlar kiradi:
+  A) Karboksipeptidaza va aminopeptidaza
+  B) Pepsin, gastriksin, tripsin, ximotripsin, elastaza (ichki peptid bog'larni uzadi)
+  C) Dipeptidazalar
+  D) Faqat enterokinaza
+  TO'G'RI JAVOB: B
+  IZOH: Endopeptidazalar oqsil molekulasining ichki qismidagi peptid bog'larini gidrolizlaydi.
+--------------------------------------------------
+
+41-SAVOL: Yo'g'on ichak mikroflorasi ta'sirida tirozindan qanday zaharli mahsulot hosil bo'ladi?
+  A) Indol va skatol
+  B) Krezol va fenol
+  C) Kadaverin va putresin
+  D) Ammiak va karbonat angidrid
+  TO'G'RI JAVOB: B
+  IZOH: Tirozindan ichak bakteriyalari ta'sirida fenol va krezol, triptofandan esa indol va skatol hosil bo'ladi.
+--------------------------------------------------
+
+42-SAVOL: Qaysi aminokislota inson to'qimalarida to'g'ridan-to'g'ri oksidlovchi dezaminlanishga uchraydi?
+  A) Glutamin kislotasi (glutamatdegidrogenaza ishtirokida)
+  B) Valin
+  C) Glitsin
+  D) Lizin
+  TO'G'RI JAVOB: A
+  IZOH: Glutamatdegidrogenaza fermenti orqali to'g'ridan-to'g'ri va tezkor oksidlovchi dezaminlanadigan asosiy aminokislota glutamatdir.
+--------------------------------------------------
+
+43-SAVOL: Serotonin qaysi moddaning dekarboksillanishidan hosil bo'ladi?
+  A) Tirozindan
+  B) 5-Gidroksitriptofandan (triptofandan)
+  C) Gistidindan
+  D) Glutamatdan
+  TO'G'RI JAVOB: B
+  IZOH: Triptofan dastlab 5-gidroksitriptofanga aylanadi, so'ngra dekarboksillanib serotonin hosil bo'ladi.
+--------------------------------------------------
+
+44-SAVOL: γ-Aminomoy kislota (GAMK) qaysi moddaning dekarboksillanishidan hosil bo'ladi?
+  A) Glutamat (glutamin kislotasi) dan
+  B) Aspartatdan
+  C) Serindan
+  D) Metionindan
+  TO'G'RI JAVOB: A
+  IZOH: Glutamat kislotasi glutamatdekarboksilaza ishtirokida dekarboksillanib GAMK hosil qiladi.
+--------------------------------------------------
+
+45-SAVOL: Gistidinning dekarboksillanishi natijasida nima hosil bo'ladi?
+  A) Serotonin
+  B) Gistamin (gistidindan)
+  C) Dofamin
+  D) Tiroksin
+  TO'G'RI JAVOB: B
+  IZOH: Gistidindekarboksilaza ta'sirida gistidindan biologik faol amin — gistamin hosil bo'ladi.
+--------------------------------------------------
+
+46-SAVOL: Qaysi biogen amin markaziy nerv sistemasida tormozlovchi neyrotransmitter hisoblanadi?
+  A) Adrenalin
+  B) Gamma-aminomoy kislota (GAMK)
+  C) Gistamin
+  D) Noradrenalin
+  TO'G'RI JAVOB: B
+  IZOH: GAMK bosh miya po'stlog'idagi asosiy tormozlovchi vositachi hisoblanadi.
+--------------------------------------------------
+
+47-SAVOL: Kadavr zahari bo'lgan biogen aminlar qaysilar?
+  A) Kadaverin (lizindan) va putresin (ornitindan)
+  B) Fenol va krezol
+  C) Indol va skatol
+  D) Mochevina va siydik kislotasi
+  TO'G'RI JAVOB: A
+  IZOH: Oqsillarning chirishida lizin va ornitinning dekarboksillanishidan kadaverin va putresin (ptomainlar) hosil bo'ladi.
+--------------------------------------------------
+
+48-SAVOL: Oshqozonda qaysi biogen amin HCl sekretsiyasini kuchli rag'batlantiradi?
+  A) Serotonin
+  B) Gistamin
+  C) Dofamin
+  D) GAMK
+  TO'G'RI JAVOB: B
+  IZOH: Gistamin me'da parietal hujayralaridagi H2-retseptorlarni qo'zg'atib, xlorid kislota ajralishini rag'batlantiradi.
+--------------------------------------------------
+
+49-SAVOL: Monoaminoksidaza (MAO) fermentining kofermenti nima?
+  A) FAD
+  B) NAD+
+  C) Piridoksalfosfat (B6)
+  D) Tiamindifosfat (B1)
+  TO'G'RI JAVOB: A
+  IZOH: MAO flavoprotein bo'lib, uning kofaktori FAD (flavinadenindinukleotid) hisoblanadi.
+--------------------------------------------------
+
+50-SAVOL: Ornitin siklining yakuniy mahsuloti nima?
+  A) Siydik kislotasi
+  B) Mochevina (karbamid)
+  C) Kreatinin
+  D) Karbamoilfosfat
+  TO'G'RI JAVOB: B
+  IZOH: Ornitin sikli orqali ammiak zararsiz yakuniy mahsulot — mochevina (karbamid)ga aylanadi.
+--------------------------------------------------
+
+51-SAVOL: Qaysi kasalliklar ornitin sikli fermentlari buzilishi bilan bog'liq?
+  A) Sitrullinemiya, argininsuksinat atsiduriya, giperammoniemiya
+  B) Fenilketonuriya va albinizm
+  C) Alkaptonuriya va podagra
+  D) Seliakiya va mukovissidoz
+  TO'G'RI JAVOB: A
+  IZOH: Ornitin sikli fermentlarining tug'ma yetishmovchiligi qonda ammiak va sikl metabolitlarining to'planishiga sabab bo'ladi.
+--------------------------------------------------
+
+52-SAVOL: Yangi tug'ilgan chaqaloqlarda ammiakni zararsizlantirishning asosiy usuli qaysi?
+  A) Glutamin sintezi (glutaminsintetaza)
+  B) Jigarda mochevina hosil qilish
+  C) O'pka orqali chiqarish
+  D) Kreatin sintezi
+  TO'G'RI JAVOB: A
+  IZOH: Chaqaloqlarda ornitin sikli fermentlari to'liq faollashmagani sababli ammiak asosan glutamin sintezi orqali zararsizlantiriladi.
+--------------------------------------------------
+
+53-SAVOL: Kattalarda ammiakni zararsizlantirishning asosiy usuli qaysi?
+  A) Mochevina sintezi (ornitin sikli, jigarda)
+  B) Siydik kislotasiga aylantirish
+  C) Teri orqali ajratish
+  D) Glitsin hosil qilish
+  TO'G'RI JAVOB: A
+  IZOH: Katta yoshdagi sog'lom odamda ammiakning 80% dan ortig'i jigarda ornitin sikli orqali mochevinaga aylantiriladi.
+--------------------------------------------------
+
+54-SAVOL: Glitsin ajratuvchi ferment tizimining nuqsoni bilan qaysi irsiy kasallik rivojlanadi?
+  A) Glitsinoz (glitsin ensefalopatiyasi, glitsin ajratuvchi tizim nuqsoni)
+  B) Fenilketonuriya
+  C) Alkaptonuriya
+  D) Tirozinemiya
+  TO'G'RI JAVOB: A
+  IZOH: Glitsin-cleavage system (glitsin parchalovchi tizim) nuqsonida likvor va qonda glitsin to'planib, glitsinoz rivojlanadi.
+--------------------------------------------------
+
+55-SAVOL: S-adenozilmetionin (SAM) qaysi reaksiyalarda ishtirok etadi?
+  A) Transmetillanish (metil guruhini ko'chirish): adrenalin, kreatin, fosfatidilxolin sintezi
+  B) Transaminlanish reaksiyalarida
+  C) Oksidlovchi fosforillanishda
+  D) Dekarboksillanish reaksiyalarida
+  TO'G'RI JAVOB: A
+  IZOH: S-adenozilmetionin (SAM) hujayrada metil guruhlarining universal donori hisoblanadi.
+--------------------------------------------------
+
+56-SAVOL: Ishlayotgan mushakda ATF ning tez hosil bo'lishi qaysi modda ishtirokida sodir bo'ladi?
+  A) Kreatinfosfat (kreatinkinaza ishtirokida)
+  B) Glikogen
+  C) Xolesterin
+  D) Triglitseridlar
+  TO'G'RI JAVOB: A
+  IZOH: Kreatinfosfat o'zining yuqori energiyali fosfatini ADF ga berib, bir lahzada ATF ni qayta hosil qiladi.
+--------------------------------------------------
+
+57-SAVOL: Almashinadigan aminokislota sistein qaysi aminokislotalardan sintezlanadi?
+  A) Metionin (oltingugurt manbayi) va serindan
+  B) Valin va leysindan
+  C) Tirozin va triptofandan
+  D) Alanin va glitsindan
+  TO'G'RI JAVOB: A
+  IZOH: Sistein sintezida oltingugurt atomi metionindan, uglerod skeleti esa serindan olinadi.
+--------------------------------------------------
+
+58-SAVOL: Sistein dimeri nima deb ataladi?
+  A) Sistin
+  B) Metionin
+  C) Gomosistein
+  D) Taurin
+  TO'G'RI JAVOB: A
+  IZOH: Ikki molekula sistein disulfid bog'i orqali birlashib sistin dimerini hosil qiladi.
+--------------------------------------------------
+
+59-SAVOL: Fenilalanin inson tanasida gidroksillanganda nima hosil bo'ladi?
+  A) Tirozin
+  B) Triptofan
+  C) Treonin
+  D) Gistidin
+  TO'G'RI JAVOB: A
+  IZOH: Fenilalaningidroksilaza fermenti fenilalaninni gidroksillab tirozinga aylantiradi.
+--------------------------------------------------
+
+60-SAVOL: Fenilalanindan tirozin hosil bo'lishini qaysi ferment katalizlaydi?
+  A) Fenilalaningidroksilaza (koferment — tetragidrobiopterin)
+  B) Tirozinaza
+  C) Fenilalanintransaminaza
+  D) Dofamin-beta-gidroksilaza
+  TO'G'RI JAVOB: A
+  IZOH: Fenilalaningidroksilaza fermenti tetragidrobiopterin (BH4) kofaktori ishtirokida fenilalanindan tirozin hosil qiladi.
+--------------------------------------------------
+
+61-SAVOL: Melanotsitlarda melanin qaysi aminokislotadan hosil bo'ladi?
+  A) Tirozin (tirozinaza fermenti)
+  B) Glitsin
+  C) Valin
+  D) Sistein
+  TO'G'RI JAVOB: A
+  IZOH: Tirozinaza fermenti ta'sirida tirozindan qora pigment — melanin sintezlanadi.
+--------------------------------------------------
+
+62-SAVOL: Asab to'qimasidagi katexolaminlar qaysi aminokislotadan hosil bo'ladi?
+  A) Tirozin
+  B) Glitsin
+  C) Prolin
+  D) Lizin
+  TO'G'RI JAVOB: A
+  IZOH: Tirozindan dofamin, noradrenalin va adrenalin sintezlanadi.
+--------------------------------------------------
+
+63-SAVOL: Qalqonsimon bezda tireoid gormonlari qaysi aminokislotadan sintezlanadi?
+  A) Tirozin (tiroglobulin tarkibida)
+  B) Triptofan
+  C) Fenilalanin
+  D) Gistidin
+  TO'G'RI JAVOB: A
+  IZOH: Tiroglobulin tarkibidagi tirozin qoldiqlari yodlanib T3 va T4 gormonlariga aylanadi.
+--------------------------------------------------
+
+64-SAVOL: Katexolaminlarga quyidagilar kiradi:
+  A) Dofamin, noradrenalin va adrenalin
+  B) Serotonin, gistamin, melatonin
+  C) Tiroksin va triyodtironin
+  D) Insulin va glyukagon
+  TO'G'RI JAVOB: A
+  IZOH: Dofamin, noradrenalin va adrenalin pirokatexin yadrosiga ega katexolaminlar hisoblanadi.
+--------------------------------------------------
+
+65-SAVOL: Qalqonsimon bez follikulalarida tireoid gormonlari oqsil tarkibidagi qaysi qoldiqlardan hosil bo'ladi?
+  A) Tirozin (tiroglobulindagi tirozin qoldiqlari yodlanib T3 va T4 hosil bo'ladi)
+  B) Erkin triptofan
+  C) Fenilalanin
+  D) Gistidin
+  TO'G'RI JAVOB: A
+  IZOH: Tiroksin va triyodtironin tiroglobulin tarkibidagi tirozin qoldiqlarining yodlanishi natijasida hosil bo'ladi.
+--------------------------------------------------
+
+66-SAVOL: Leysin, valin, izoleysin metabolizmida qaysi ko'p fermentli kompleks ishtirok etadi?
+  A) Tarmoqlangan zanjirli α-ketokislotalar degidrogenaza kompleksi
+  B) Piruvatdegidrogenaza kompleksi
+  C) alfa-Ketoglutaratdegidrogenaza kompleksi
+  D) Suksinatdegidrogenaza
+  TO'G'RI JAVOB: A
+  IZOH: Tarmoqlangan zanjirli aminokislotalarning katabolizmida tarmoqlangan zanjirli α-ketokislotalar degidrogenaza kompleksi qatnashadi.
+--------------------------------------------------
+
+67-SAVOL: Me'da shirasining umumiy kislotaligi 80 ga teng bo'lsa (norma 40-60), ya'ni bemorda:
+  A) Giperxlorgidriya (kislotalik oshgan)
+  B) Gipoxlorgidriya
+  C) Axlorgidriya
+  D) Anasid holat
+  TO'G'RI JAVOB: A
+  IZOH: Umumiy kislotalik 60 dan yuqori bo'lishi giperxlorgidriya (kislotalik oshishi) deb baholanadi.
+--------------------------------------------------
+
+68-SAVOL: Me'da shirasining umumiy kislotaligi 20 ga teng bo'lsa (norma 40-60), ya'ni bemorda:
+  A) Giperxlorgidriya
+  B) Gipoxlorgidriya (kislotalik pasaygan)
+  C) Normotsid holat
+  D) Giperatsid holat
+  TO'G'RI JAVOB: B
+  IZOH: Kislotalik ko'rsatkichi 40 dan past bo'lsa, bu gipoxlorgidriya (kislotalik pasayishi) hisoblanadi.
+--------------------------------------------------
+
+69-SAVOL: Kislotalikning pasayishi va oshqozon shirasida sut kislotasining mavjudligi qaysi holat uchun xos?
+  A) Oshqozon saratoni (axlorgidriya, anasid holat)
+  B) O'n ikki barmoqli ichak yarasi
+  C) Giperasid gastrit
+  D) O't tosh kasalligi
+  TO'G'RI JAVOB: A
+  IZOH: Axlorgidriyada o'sma to'qimalarining anaerob glikolizi natijasida oshqozonda sut kislotasi to'planadi.
+--------------------------------------------------
+
+70-SAVOL: Oshqozon shirasida kislotalikning ko'payishi va safro kislotalarining mavjudligi qaysi holat uchun xos?
+  A) O'n ikki barmoqli ichak yarasi, giperasid gastrit (safro reflyuksi bilan)
+  B) Oshqozon saratoni
+  C) Atrofik anasid gastrit
+  D) Jigar sirrozi
+  TO'G'RI JAVOB: A
+  IZOH: Yuqori kislotalik va duodenogastral safro reflyuksi ko'pincha o'n ikki barmoqli ichak yarasida kuzatiladi.
+--------------------------------------------------
+
+71-SAVOL: Don tarkibidagi oqsillarga (bug'doy, jo'xori, javdar) chidamsizlik qaysi kasallikda kuzatiladi?
+  A) Seliakiya (glyuten enteropatiyasi)
+  B) Mukovissidoz
+  C) Kron kasalligi
+  D) Nospetsifik yarali kolit
+  TO'G'RI JAVOB: A
+  IZOH: Seliakiya — glyuten oqsiliga nisbatan tug'ma chidamsizlik bo'lib, ingichka ichak vorsinkalari atrofiyasiga olib keladi.
+--------------------------------------------------
+
+72-SAVOL: Bolalarda grippdan keyin ferment ingibirlanishi tufayli paydo bo'lishi mumkin bo'lgan giperammoniemiya qaysi sindrom?
+  A) Rey sindromi (ornitin sikli fermentlarining ingibirlanishi)
+  B) Daun sindromi
+  C) Terner sindromi
+  D) Klaynfelter sindromi
+  TO'G'RI JAVOB: A
+  IZOH: Rey sindromida virusli kasallik va aspirin qabulidan keyin jigar mitoxondriyalaridagi ornitin sikli fermentlari ingibirlanadi.
+--------------------------------------------------
+
+73-SAVOL: Buyraklarda glitsin reabsorbsiyasining buzilishi nimaga olib keladi?
+  A) Glitsinuriya
+  B) Proteinuriya
+  C) Gematuriya
+  D) Glyukozuriya
+  TO'G'RI JAVOB: A
+  IZOH: Buyrak naychalarida glitsin tashuvchi tizim nuqsonida glitsinning siydik bilan ajralishi ortadi (glitsinuriya).
+--------------------------------------------------
+
+74-SAVOL: Osteoporoz, ko'z linzalarining siljishi, aqliy zaiflik qaysi kasallikda kuzatiladi?
+  A) Gomosistinuriya
+  B) Fenilketonuriya
+  C) Albinizm
+  D) Gistidinemiya
+  TO'G'RI JAVOB: A
+  IZOH: Gomosistinuriya — sistationin-beta-sintaza fermenti nuqsoni bo'lib, suyak va biriktiruvchi to'qima anomaliyalari bilan kechadi.
+--------------------------------------------------
+
+75-SAVOL: Buyrak kanallarida sistin toshlarining paydo bo'lishi qaysi kasallikda kuzatiladi?
+  A) Sistinuriya
+  B) Sistinoz
+  C) Alkaptonuriya
+  D) Oksaluriya
+  TO'G'RI JAVOB: A
+  IZOH: Sistinuriya buyrakda sistin, lizin, arginin va ornitin reabsorbsiyasi buzilishidir; sistin yomon eriganligi uchun tosh hosil qiladi.
+--------------------------------------------------
+
+76-SAVOL: Retikuloendotelial tizim va parenximal organlarda sistin kristallarining shakllanishi qaysi kasallikda kuzatiladi?
+  A) Sistinuriya
+  B) Sistinoz
+  C) Podagra
+  D) Albinizm
+  TO'G'RI JAVOB: B
+  IZOH: Sistinoz — lizosomalarda sistin tashuvchisi nuqsoni bo'lib, a'zolarda sistin kristallari to'planishi bilan xarakterlanadi.
+--------------------------------------------------
+
+77-SAVOL: Fenilketonuriyada fenilalanin almashinuvining qanday toksik yon mahsulotlari to'planadi?
+  A) Fenilpiruvat, fenillaktat, fenilsirka kislota
+  B) Asetoatsetat va gidroksibutirat
+  C) Indol va skatol
+  D) Krezol va fenol
+  TO'G'RI JAVOB: A
+  IZOH: Fenilalanin fenilalaningidroksilaza yetishmovchiligida fenilpiruvat, fenillaktat va fenilsirka kislotaga aylanadi.
+--------------------------------------------------
+
+78-SAVOL: Variantli (atipik) fenilketonuriyaning sababi qaysi ferment nuqsoni hisoblanadi?
+  A) Digidropteridinreduktaza (yoki tetragidrobiopterin sintezi) nuqsoni
+  B) Faqat fenilalaningidroksilaza yo'qligi
+  C) Tirozinaza fermenti nuqsoni
+  D) Arginaza fermenti nuqsoni
+  TO'G'RI JAVOB: A
+  IZOH: Variantli fenilketonuriyada fenilalaningidroksilaza kofaktori BH4 (tetragidrobiopterin) sintezi yoki qaytarilishi buzilgan bo'ladi.
+--------------------------------------------------
+
+79-SAVOL: Aqliy zaiflik, 'sichqon' hidi, qon va siydikda fenilalaninning ko'payishi qaysi kasallikda kuzatiladi?
+  A) Alkaptonuriya
+  B) Fenilketonuriya
+  C) Galaktozemiya
+  D) Gistidinemiya
+  TO'G'RI JAVOB: B
+  IZOH: Fenilketonuriyada to'plangan fenilsirka kislotasi siydik va terga o'ziga xos sichqon (mog'or) hidini beradi.
+--------------------------------------------------
+
+80-SAVOL: Oqargan teri, oq sochlar va qizil ko'zli bolada qaysi ferment genetik yo'q bo'ladi?
+  A) Tirozinaza (albinizm)
+  B) Gomogentizatoksidaza
+  C) Fenilalaningidroksilaza
+  D) Arginaza
+  TO'G'RI JAVOB: A
+  IZOH: Tirozinaza fermenti yetishmovchiligida tirozindan melanin pigmenti hosil bo'lmaydi (albinizm).
+--------------------------------------------------
+
+81-SAVOL: Chaqaloq siydik chiqargandan keyin tagliklarda qora dog'lar paydo bo'lsa, bu qaysi kasallik?
+  A) Fenilketonuriya
+  B) Alkaptonuriya (gomogentizin kislota)
+  C) Sistinuriya
+  D) Tirozinemiya
+  TO'G'RI JAVOB: B
+  IZOH: Alkaptonuriyada gomogentizin kislotasi siydikda havo kislorodi ta'sirida oksidlanib, qora pigment hosil qiladi.
+--------------------------------------------------
+
+82-SAVOL: Yangi tug'ilgan bolada qusish, diareya, 'qaynatilgan karam' hidi, qonda tirozin miqdorining ko'payishi qaysi kasallikka xos?
+  A) Gistidinemiya
+  B) Tirozinemiya
+  C) Albinizm
+  D) Fenilketonuriya
+  TO'G'RI JAVOB: B
+  IZOH: Tirozinemiya (I tur) da tirozin almashinuvi buzilib, xarakterli karam hidi va og'ir jigar-buyrak zararlanishi kuzatiladi.
+--------------------------------------------------
+
+83-SAVOL: Kasal bolada qon plazmasi va siydikda leysin, valin, izoleysin va ularga mos α-ketokislotalar ko'payadi. Bu qaysi kasallik?
+  A) Zarang siropi kasalligi (maple syrup urine disease)
+  B) Fenilketonuriya
+  C) Alkaptonuriya
+  D) Gomosistinuriya
+  TO'G'RI JAVOB: A
+  IZOH: Tarmoqlangan zanjirli aminokislotalar ketokislotalarining oksidlovchi dekarboksillanishi buzilishi natijasida zarang siropi kasalligi kelib chiqadi.
+--------------------------------------------------
+
+84-SAVOL: Zarang siropi kasalligi qaysi metabolik buzilishlar bilan kuzatiladi?
+  A) Tarmoqlangan zanjirli aminokislotalar (leysin, izoleysin, valin) almashinuvining buzilishi bilan
+  B) Aromatik aminokislotalar buzilishi bilan
+  C) Oltingugurtli aminokislotalar buzilishi bilan
+  D) Asosli aminokislotalar buzilishi bilan
+  TO'G'RI JAVOB: A
+  IZOH: Leysin, izoleysin va valin tarmoqlangan zanjirli aminokislotalar bo'lib, zarang siropi kasalligida ularning parchalanishi buziladi.
+--------------------------------------------------
+
+85-SAVOL: Alkaptonuriyaning sababi qaysi ferment nuqsoni?
+  A) Tirozinaminotransferaza
+  B) Gomogentizat-1,2-dioksigenaza (gomogentizin kislota oksidaza)
+  C) Fumarilatsetoatsetathidrolaza
+  D) Fenilalaningidroksilaza
+  TO'G'RI JAVOB: B
+  IZOH: Gomogentizat-1,2-dioksigenaza yetishmovchiligida gomogentizin kislotasi parchalanmay to'qima va siydikda to'planadi.
+--------------------------------------------------

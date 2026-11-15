@@ -1,0 +1,3 @@
+﻿question,option_a,option_b,option_c,option_d,correct_answer,explanation,topic,difficulty,timer,image
+Alisher Navoiy qaysi yilda tavallud topgan?,1441-yil,1436-yil,1483-yil,1501-yil,A,Alisher Navoiy 1441-yil 9-fevralda Hirotda tug'ilgan.,Adabiyot,Medium,25,
+Which data structure in Python is mutable and unordered?,tuple,str,set,int,C,Sets are mutable collections of unique unordered items.,Programming,Easy,20,

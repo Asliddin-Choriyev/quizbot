@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+quizbot.zip
+venv/
+.venv/
+exports/
+imports/
+*.log
