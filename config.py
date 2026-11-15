@@ -18,7 +18,7 @@ for p in [DATA_DIR, IMPORTS_DIR, EXPORTS_DIR, TEMPLATES_DIR, BACKUP_DIR]:
 load_dotenv(BASE_DIR / ".env")
 
 # Bot credentials & configuration
-BOT_TOKEN = os.getenv("BOT_TOKEN", "").strip()
+BOT_TOKEN = (os.getenv("BOT_TOKEN") or os.getenv("TELEGRAM_BOT_TOKEN") or "").strip()
 
 # Admin IDs: comma-separated list of Telegram user IDs
 admin_ids_raw = os.getenv("ADMIN_IDS", "").strip()
