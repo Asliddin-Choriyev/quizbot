@@ -233,8 +233,23 @@ def get_admin_users_kb(users: list, page: int = 0, total: int = 0, page_size: in
 
     export_btn = "📥 Barchasini Excelga yuklash" if lang == "uz" else "📥 Export All to Excel"
     rows.append([InlineKeyboardButton(text=export_btn, callback_data="adm:export_users")])
+    if total > 0:
+        clear_btn = "🗑 Barcha foydalanuvchilarni tozalash" if lang == "uz" else "🗑 Clear All Users"
+        rows.append([InlineKeyboardButton(text=clear_btn, callback_data="adm:clear_users_conf")])
     rows.append([InlineKeyboardButton(text="◀️ Admin Menu", callback_data="adm:menu")])
     return InlineKeyboardMarkup(inline_keyboard=rows)
+
+def get_admin_clear_users_confirm_kb(lang: str = "uz") -> InlineKeyboardMarkup:
+    yes_btn = "🗑 Ha, barchasini tozalash" if lang == "uz" else "🗑 Yes, clear all"
+    cancel_btn = t("btn_cancel", lang)
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text=yes_btn, callback_data="adm:clear_users_do"),
+                InlineKeyboardButton(text=cancel_btn, callback_data="adm:users:0")
+            ]
+        ]
+    )
 
 def get_admin_user_detail_kb(user_id: int, is_target_admin: bool = False, lang: str = "uz") -> InlineKeyboardMarkup:
     del_btn = "🗑 Foydalanuvchini o'chirish" if lang == "uz" else "🗑 Delete User"

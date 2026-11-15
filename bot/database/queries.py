@@ -251,6 +251,37 @@ async def delete_user(conn: aiosqlite.Connection, telegram_id: int) -> bool:
     await conn.commit()
     return True
 
+async def clear_all_non_admin_users(conn: aiosqlite.Connection) -> int:
+    await conn.execute("PRAGMA foreign_keys = ON;")
+    await conn.execute(
+        """
+        DELETE FROM session_answers 
+        WHERE user_id IN (SELECT telegram_id FROM users WHERE is_admin = 0)
+        """
+    )
+    await conn.execute(
+        """
+        DELETE FROM quiz_sessions 
+        WHERE user_id IN (SELECT telegram_id FROM users WHERE is_admin = 0)
+        """
+    )
+    await conn.execute(
+        """
+        DELETE FROM group_answers 
+        WHERE user_id IN (SELECT telegram_id FROM users WHERE is_admin = 0)
+        """
+    )
+    await conn.execute(
+        """
+        DELETE FROM group_participants 
+        WHERE user_id IN (SELECT telegram_id FROM users WHERE is_admin = 0)
+        """
+    )
+    async with conn.execute("DELETE FROM users WHERE is_admin = 0") as cursor:
+        deleted = cursor.rowcount
+    await conn.commit()
+    return deleted
+
 # ==========================================
 # QUIZ QUERIES
 # ==========================================

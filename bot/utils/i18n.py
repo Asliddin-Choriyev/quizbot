@@ -228,6 +228,14 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
         "en": "⛔ Administrator account cannot be deleted!",
         "uz": "⛔ Administrator foydalanuvchini o'chirib bo'lmaydi!"
     },
+    "admin_clear_users_confirm": {
+        "en": "⚠️ <b>Are you sure you want to clear ALL registered users?</b>\n\n<i>Warning: All participant results, scores, and profiles will be permanently deleted! Admin accounts will remain safe.</i>",
+        "uz": "⚠️ <b>Haqiqatan ham BARCHA foydalanuvchilarni tozalashni tasdiqlaysizmi?</b>\n\n<i>Diqqat: Barcha talabalarning test natijalari, ballari va profillari butunlay o'chiriladi! Admin hisobiga tegmaydi.</i>"
+    },
+    "admin_users_cleared": {
+        "en": "🗑 Cleared {count} users successfully.",
+        "uz": "🗑 {count} ta foydalanuvchi muvaffaqiyatli tozalandi."
+    },
     "btn_admin_quizzes": {
         "en": "📋 Manage Quizzes",
         "uz": "📋 Testlarni boshqarish"

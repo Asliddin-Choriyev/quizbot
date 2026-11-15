@@ -26,7 +26,8 @@ from bot.keyboards.inline import (
     get_import_confirm_kb,
     get_admin_users_kb,
     get_admin_user_detail_kb,
-    get_admin_user_delete_confirm_kb
+    get_admin_user_delete_confirm_kb,
+    get_admin_clear_users_confirm_kb
 )
 from bot.services.importer import (
     parse_import_file,
@@ -823,6 +824,41 @@ async def cb_admin_del_user_do(callback: CallbackQuery, db: Database, is_admin: 
         users, total = await queries.list_users(conn, page=0, page_size=8)
 
     await callback.answer(t("admin_user_deleted", lang), show_alert=True)
+
+    text = t("admin_users_title", lang, total=total)
+    kb = get_admin_users_kb(users, page=0, total=total, page_size=8, lang=lang)
+
+    try:
+        await callback.message.edit_text(text, reply_markup=kb, parse_mode="HTML")
+    except Exception:
+        await callback.message.answer(text, reply_markup=kb, parse_mode="HTML")
+
+@router.callback_query(F.data == "adm:clear_users_conf")
+async def cb_admin_clear_users_conf(callback: CallbackQuery, is_admin: bool = False, lang: str = "uz"):
+    if not is_admin:
+        await callback.answer(t("admin_not_authorized", lang), show_alert=True)
+        return
+
+    text = t("admin_clear_users_confirm", lang)
+    kb = get_admin_clear_users_confirm_kb(lang=lang)
+
+    try:
+        await callback.message.edit_text(text, reply_markup=kb, parse_mode="HTML")
+    except Exception:
+        await callback.message.answer(text, reply_markup=kb, parse_mode="HTML")
+    await callback.answer()
+
+@router.callback_query(F.data == "adm:clear_users_do")
+async def cb_admin_clear_users_do(callback: CallbackQuery, db: Database, is_admin: bool = False, lang: str = "uz"):
+    if not is_admin:
+        await callback.answer(t("admin_not_authorized", lang), show_alert=True)
+        return
+
+    async with db.get_connection() as conn:
+        count = await queries.clear_all_non_admin_users(conn)
+        users, total = await queries.list_users(conn, page=0, page_size=8)
+
+    await callback.answer(t("admin_users_cleared", lang, count=count), show_alert=True)
 
     text = t("admin_users_title", lang, total=total)
     kb = get_admin_users_kb(users, page=0, total=total, page_size=8, lang=lang)

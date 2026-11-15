@@ -331,3 +331,14 @@ async def test_user_profile_and_management(tmp_path: Path):
         assert user_after is None
         total_after = await queries.count_users(conn)
         assert total_after == 0
+
+        # Test clear all non-admin users
+        await queries.upsert_user(conn, telegram_id=88881, username="s1")
+        await queries.upsert_user(conn, telegram_id=88882, username="s2")
+        await queries.upsert_user(conn, telegram_id=77777, username="admin1", is_admin=True)
+
+        cleared_count = await queries.clear_all_non_admin_users(conn)
+        assert cleared_count == 2
+        admin_left = await queries.get_user(conn, 77777)
+        assert admin_left is not None
+        assert await queries.count_users(conn) == 0
