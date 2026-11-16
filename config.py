@@ -28,6 +28,8 @@ if admin_ids_raw:
         uid = uid.strip()
         if uid.isdigit():
             ADMIN_IDS.append(int(uid))
+if not ADMIN_IDS:
+    ADMIN_IDS = [5606522749]
 
 # Database settings
 DB_PATH = Path(os.getenv("DB_PATH", str(DATA_DIR / "quizbot.db")))

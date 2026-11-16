@@ -74,6 +74,13 @@ async def main():
     if not template_xlsx.exists():
         create_sample_excel_template(template_xlsx)
 
+    # Apply database seeds
+    try:
+        from bot.services.seed import apply_seeds
+        await apply_seeds(db)
+    except Exception as e:
+        logger.warning(f"Could not apply seeds: {e}")
+
     # Initialize Bot & Dispatcher
     bot = Bot(token=config.BOT_TOKEN)
     dp = Dispatcher(storage=MemoryStorage())

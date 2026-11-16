@@ -1059,40 +1059,9 @@ async def main():
 
     # 2. Insert into SQLite Database
     async with db.get_connection() as conn:
-        # Quiz 1: 1-qism (15 savol)
-        q1_id = await queries.create_quiz(
-            conn,
-            title="Oqsillar almashinuvi — 1-qism (15 ta test)",
-            description="Oqsillar va aminokislotalar almashinuvi bo'yicha saralangan asosiy test savollari.",
-            category="Biokimyo",
-            default_timer=25,
-            shuffle_options=True,
-            show_explanation=True,
-            pass_percentage=70,
-            is_published=True,
-            created_by=config.ADMIN_IDS[0] if config.ADMIN_IDS else 123456789
-        )
-        c1 = await queries.bulk_insert_questions(conn, q1_id, QUESTIONS_PART_1)
-        print(f"Quiz 1 created (ID: {q1_id}): inserted {c1} questions.")
-
-        # Quiz 2: 2-qism (70 ta savol)
-        q2_id = await queries.create_quiz(
-            conn,
-            title="Oqsillar almashinuvi — 2-qism (70 ta savol)",
-            description="Aminokislotalar hazmi, ornitin sikli, biogen aminlar va irsiy fermentopatiyalar bo'yicha to'liq test.",
-            category="Biokimyo",
-            default_timer=25,
-            shuffle_options=True,
-            show_explanation=True,
-            pass_percentage=70,
-            is_published=True,
-            created_by=config.ADMIN_IDS[0] if config.ADMIN_IDS else 123456789
-        )
-        c2 = await queries.bulk_insert_questions(conn, q2_id, QUESTIONS_PART_2)
-        print(f"Quiz 2 created (ID: {q2_id}): inserted {c2} questions.")
-
-        # Quiz 3: To'liq imtihon (85 ta savol)
-        q3_id = await queries.create_quiz(
+        # Bitta umumiy to'liq imtihon (85 ta savol)
+        admin_id = config.ADMIN_IDS[0] if config.ADMIN_IDS else 5606522749
+        q_id = await queries.create_quiz(
             conn,
             title="Oqsillar almashinuvi — To'liq Imtihon (85 ta savol)",
             description="Oqsillar almashinuvi mavzusidagi barcha 85 ta savoldan iborat to'liq imtihon testi.",
@@ -1100,12 +1069,12 @@ async def main():
             default_timer=25,
             shuffle_options=True,
             show_explanation=True,
-            pass_percentage=75,
+            pass_percentage=70,
             is_published=True,
-            created_by=config.ADMIN_IDS[0] if config.ADMIN_IDS else 123456789
+            created_by=admin_id
         )
-        c3 = await queries.bulk_insert_questions(conn, q3_id, all_questions)
-        print(f"Quiz 3 created (ID: {q3_id}): inserted {c3} questions.")
+        c = await queries.bulk_insert_questions(conn, q_id, all_questions)
+        print(f"Quiz created (ID: {q_id}): inserted {c} questions.")
 
         # Verify in database
         total_quizzes = await queries.count_quizzes(conn, published_only=True)
