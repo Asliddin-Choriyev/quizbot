@@ -8,6 +8,7 @@ from bot.database.db import Database
 from bot.database import queries
 from bot.services.group_engine import GroupQuizEngine
 from bot.utils.i18n import t
+from bot.utils.formatters import format_leaderboard
 
 logger = logging.getLogger(__name__)
 router = Router(name="group")
@@ -71,6 +72,26 @@ async def handle_group_stop_command(message: Message, db: Database, lang: str = 
 
     engine = GroupQuizEngine(bot=message.bot, db=db)
     await engine.stop_competition(chat_id=message.chat.id, lang=lang)
+
+@router.message(Command("top"))
+async def handle_group_top_command(message: Message, db: Database, lang: str = "uz"):
+    """Show current standings in the active group quiz on demand."""
+    async with db.get_connection() as conn:
+        comp = await queries.get_active_group_competition(conn, message.chat.id)
+        if not comp:
+            await message.reply("ℹ️ Guruhda faol musobaqa yo'q.")
+            return
+        participants = await queries.get_group_participants(conn, comp.id)
+
+    rankings = [
+        {"full_name": p.full_name, "score": p.score, "correct_answers": p.correct_answers}
+        for p in participants
+    ]
+    board_text = format_leaderboard(rankings, max_items=5)
+    await message.reply(
+        f"📊 <b>Hozirgi yetakchilar ({comp.current_question_index}/{comp.total_questions}):</b>\n\n{board_text}",
+        parse_mode="HTML"
+    )
 
 @router.callback_query(F.data.startswith("gjoin:"))
 async def handle_group_join_cb(callback: CallbackQuery, db: Database, lang: str = "uz"):

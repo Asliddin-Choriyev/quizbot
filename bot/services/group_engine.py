@@ -229,19 +229,7 @@ class GroupQuizEngine:
             await queries.update_group_competition(conn, comp_id, current_question_index=new_idx)
             comp = await queries.get_group_competition(conn, comp_id)
 
-        top_participants = [
-            {"full_name": p.full_name, "score": p.score, "correct_answers": p.correct_answers}
-            for p in participants[:5]
-        ]
-        leaderboard_str = format_leaderboard(top_participants, max_items=5)
-
-        round_end_msg = f"⏱ <b>Raund tugadi!</b>\n\n📊 <b>Hozirgi yetakchilar:</b>\n{leaderboard_str}"
-        try:
-            await self.bot.send_message(chat_id=comp.chat_id, text=round_end_msg, parse_mode="HTML")
-        except Exception:
-            pass
-
-        # Brief delay before sending next question
+        # Brief delay (2.0s) so participants can see the correct answer on the closed poll
         await asyncio.sleep(2.0)
         await self.send_group_question(comp, lang=lang)
 
