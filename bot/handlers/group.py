@@ -1,4 +1,5 @@
 import logging
+import config
 from aiogram import Router, F
 from aiogram.filters import Command, CommandObject, CommandStart
 from aiogram.types import Message, CallbackQuery
@@ -59,16 +60,28 @@ async def handle_group_start(message: Message, command: CommandObject, db: Datab
         except ValueError:
             pass
 
-@router.message(Command("stop"))
+@router.message(Command("stop", "cancel", ignore_mention=True))
 async def handle_group_stop_command(message: Message, db: Database, lang: str = "uz"):
-    """Allow group creator or admin to stop the active competition."""
-    try:
-        chat_member = await message.bot.get_chat_member(message.chat.id, message.from_user.id)
-        if chat_member.status not in ("creator", "administrator"):
-            await message.reply("⛔ Faqat guruh adminlari musobaqani to'xtata oladi.")
+    """Allow group creator, competition creator, or admin to stop the active competition."""
+    async with db.get_connection() as conn:
+        comp = await queries.get_active_group_competition(conn, message.chat.id)
+        if not comp:
+            await message.reply("ℹ️ Guruhda faol test mavjud emas.")
             return
-    except Exception:
-        pass
+
+        user_id = message.from_user.id
+        is_allowed = (user_id == comp.created_by) or config.is_admin(user_id)
+        if not is_allowed:
+            try:
+                chat_member = await message.bot.get_chat_member(message.chat.id, user_id)
+                if chat_member.status in ("creator", "administrator"):
+                    is_allowed = True
+            except Exception:
+                pass
+
+        if not is_allowed:
+            await message.reply("⛔ Faqat testni boshlagan foydalanuvchi yoki guruh adminlari testni to'xtata oladi.")
+            return
 
     engine = GroupQuizEngine(bot=message.bot, db=db)
     await engine.stop_competition(chat_id=message.chat.id, lang=lang)

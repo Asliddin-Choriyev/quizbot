@@ -19,6 +19,8 @@ logger = logging.getLogger(__name__)
 _active_group_polls: Dict[str, Dict[str, Any]] = {}
 # Active competition timers: comp_id -> asyncio.Task
 _active_group_timers: Dict[int, asyncio.Task] = {}
+# Active competition current poll mapping: comp_id -> (poll_id, message_id)
+_active_comp_polls: Dict[int, tuple[str, int]] = {}
 
 def cancel_group_timer(comp_id: int):
     task = _active_group_timers.pop(comp_id, None)
@@ -188,6 +190,7 @@ class GroupQuizEngine:
             return
 
         poll_id = poll_msg.poll.id
+        _active_comp_polls[comp.id] = (poll_id, poll_msg.message_id)
         _active_group_polls[poll_id] = {
             "comp_id": comp.id,
             "quiz_id": comp.quiz_id,
@@ -263,12 +266,14 @@ class GroupQuizEngine:
                 points=points
             )
 
-    async def finish_competition(self, comp: GroupCompetition, lang: str = "uz"):
+    async def finish_competition(self, comp: GroupCompetition, lang: str = "uz", was_cancelled: bool = False):
         """Post final group competition leaderboard."""
         cancel_group_timer(comp.id)
+        _active_comp_polls.pop(comp.id, None)
 
         async with self.db.get_connection() as conn:
-            await queries.update_group_competition(conn, comp.id, status="finished")
+            status = "cancelled" if was_cancelled else "finished"
+            await queries.update_group_competition(conn, comp.id, status=status)
             quiz = await queries.get_quiz(conn, comp.quiz_id)
             participants = await queries.get_group_participants(conn, comp.id)
 
@@ -278,12 +283,16 @@ class GroupQuizEngine:
         ]
         board_text = format_leaderboard(rankings, max_items=10)
 
-        final_text = t(
-            "group_final_leaderboard",
-            lang,
-            title=escape_html(quiz.title if quiz else "Quiz"),
-            total=comp.total_questions,
-            leaderboard=board_text
+        header = "🛑 <b>Test muddatidan oldin to'xtatildi!</b>\n\n" if was_cancelled else ""
+        final_text = (
+            f"{header}"
+            + t(
+                "group_final_leaderboard",
+                lang,
+                title=escape_html(quiz.title if quiz else "Quiz"),
+                total=comp.total_questions,
+                leaderboard=board_text
+            )
         )
 
         try:
@@ -292,7 +301,7 @@ class GroupQuizEngine:
             logger.error(f"Error posting final group leaderboard: {e}")
 
     async def stop_competition(self, chat_id: int, lang: str = "uz"):
-        """Cancel the active competition in chat and show final results."""
+        """Cancel the active competition in chat, close active poll, and show final results."""
         async with self.db.get_connection() as conn:
             comp = await queries.get_active_group_competition(conn, chat_id)
             if not comp:
@@ -300,7 +309,18 @@ class GroupQuizEngine:
                 return
 
         cancel_group_timer(comp.id)
-        await self.finish_competition(comp, lang=lang)
+
+        # Stop active poll in Telegram if open
+        poll_info = _active_comp_polls.pop(comp.id, None)
+        if poll_info:
+            poll_id, msg_id = poll_info
+            _active_group_polls.pop(poll_id, None)
+            try:
+                await self.bot.stop_poll(chat_id=chat_id, message_id=msg_id)
+            except Exception as e:
+                logger.debug(f"Could not stop active poll: {e}")
+
+        await self.finish_competition(comp, lang=lang, was_cancelled=True)
 
     async def process_group_answer(self, callback: CallbackQuery, comp_id: int, question_id: int, selected_option: str, lang: str = "uz"):
         """Handle inline button answer if fallback buttons are clicked."""
