@@ -87,3 +87,83 @@ async def test_quiz_engine_session_and_answers(tmp_path: Path):
         assert s_final.incorrect_count == 1
         assert s_final.score_percentage == 50.0
         assert s_final.passed is True
+
+@pytest.mark.asyncio
+async def test_group_quiz_engine_progression_and_timeout(tmp_path: Path):
+    from bot.services.group_engine import GroupQuizEngine, cancel_group_timer
+
+    db_file = tmp_path / "group_engine_test.db"
+    db = Database(db_file)
+    await db.init()
+
+    mock_bot = AsyncMock()
+    mock_msg = MagicMock(message_id=100)
+    mock_bot.send_message.return_value = mock_msg
+    mock_poll = MagicMock()
+    mock_poll.id = "gpoll_1"
+    mock_poll_msg = MagicMock(message_id=201, poll=mock_poll)
+    mock_bot.send_poll.return_value = mock_poll_msg
+
+    engine = GroupQuizEngine(bot=mock_bot, db=db)
+
+    async with db.get_connection() as conn:
+        quiz_id = await queries.create_quiz(conn, title="Group Quiz", pass_percentage=50, default_timer=5, shuffle_options=False)
+        q1_id = await queries.add_question(conn, quiz_id, "GQuestion 1?")
+        await queries.add_question_options(conn, q1_id, [
+            {"option_label": "A", "option_text": "Alpha", "is_correct": True},
+            {"option_label": "B", "option_text": "Beta", "is_correct": False},
+        ])
+        q2_id = await queries.add_question(conn, quiz_id, "GQuestion 2?")
+        await queries.add_question_options(conn, q2_id, [
+            {"option_label": "A", "option_text": "Gamma", "is_correct": False},
+            {"option_label": "B", "option_text": "Delta", "is_correct": True},
+        ])
+
+    comp_id = await engine.open_lobby(chat_id=-100123, quiz_id=quiz_id, creator_id=999)
+    assert comp_id is not None
+
+    # Join participant
+    mock_cb_join = MagicMock()
+    mock_cb_join.from_user = TgUser(id=888, is_bot=False, first_name="Student1")
+    mock_cb_join.answer = AsyncMock()
+    await engine.handle_join(mock_cb_join, comp_id)
+
+    # Start competition
+    mock_cb_start = MagicMock()
+    mock_cb_start.from_user = TgUser(id=999, is_bot=False, first_name="Host")
+    mock_cb_start.answer = AsyncMock()
+    await engine.start_competition(mock_cb_start, comp_id)
+    assert mock_bot.send_poll.called
+
+    # Student answers Question 1
+    poll_ans = PollAnswer(
+        poll_id="gpoll_1",
+        user=TgUser(id=888, is_bot=False, first_name="Student1"),
+        option_ids=[0]
+    )
+    await engine.process_group_poll_answer(poll_ans)
+
+    # Prepare mock for Question 2 poll
+    mock_poll2 = MagicMock()
+    mock_poll2.id = "gpoll_2"
+    mock_bot.send_poll.return_value = MagicMock(message_id=202, poll=mock_poll2)
+
+    # Trigger round timeout handler (simulates timer expiry without sleeping full duration)
+    await engine._handle_group_round_timeout(comp_id, q1_id, "gpoll_1", duration=0, lang="uz")
+
+    # Verify Question 2 was sent!
+    assert mock_bot.send_poll.call_count == 2
+    async with db.get_connection() as conn:
+        comp_mid = await queries.get_group_competition(conn, comp_id)
+        assert comp_mid.current_question_index == 1
+
+    # Trigger Question 2 timeout (end of quiz)
+    await engine._handle_group_round_timeout(comp_id, q2_id, "gpoll_2", duration=0, lang="uz")
+
+    async with db.get_connection() as conn:
+        comp_final = await queries.get_group_competition(conn, comp_id)
+        assert comp_final.status == "finished"
+        participants = await queries.get_group_participants(conn, comp_id)
+        assert len(participants) == 1
+        assert participants[0].score == 10
+

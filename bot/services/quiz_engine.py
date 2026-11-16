@@ -24,7 +24,11 @@ _consecutive_timeouts: Dict[str, int] = {}
 
 def cancel_session_timer(session_code: str):
     task = _active_session_timers.pop(session_code, None)
-    if task and not task.done():
+    try:
+        current = asyncio.current_task()
+    except RuntimeError:
+        current = None
+    if task and task != current and not task.done():
         task.cancel()
 
 def reset_consecutive_timeouts(session_code: str):

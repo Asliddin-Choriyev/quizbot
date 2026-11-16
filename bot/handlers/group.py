@@ -58,6 +58,20 @@ async def handle_group_start(message: Message, command: CommandObject, db: Datab
         except ValueError:
             pass
 
+@router.message(Command("stop"))
+async def handle_group_stop_command(message: Message, db: Database, lang: str = "uz"):
+    """Allow group creator or admin to stop the active competition."""
+    try:
+        chat_member = await message.bot.get_chat_member(message.chat.id, message.from_user.id)
+        if chat_member.status not in ("creator", "administrator"):
+            await message.reply("⛔ Faqat guruh adminlari musobaqani to'xtata oladi.")
+            return
+    except Exception:
+        pass
+
+    engine = GroupQuizEngine(bot=message.bot, db=db)
+    await engine.stop_competition(chat_id=message.chat.id, lang=lang)
+
 @router.callback_query(F.data.startswith("gjoin:"))
 async def handle_group_join_cb(callback: CallbackQuery, db: Database, lang: str = "uz"):
     comp_id = int(callback.data.split(":")[1])

@@ -22,7 +22,11 @@ _active_group_timers: Dict[int, asyncio.Task] = {}
 
 def cancel_group_timer(comp_id: int):
     task = _active_group_timers.pop(comp_id, None)
-    if task and not task.done():
+    try:
+        current = asyncio.current_task()
+    except RuntimeError:
+        current = None
+    if task and task != current and not task.done():
         task.cancel()
 
 class GroupQuizEngine:
@@ -166,7 +170,21 @@ class GroupQuizEngine:
                 is_anonymous=False
             )
         except Exception as e:
-            logger.error(f"Error sending group poll: {e}")
+            logger.exception(f"Error sending group poll for comp {comp.id}: {e}")
+            try:
+                await self.bot.send_message(
+                    chat_id=comp.chat_id,
+                    text=f"⚠️ Savolni yuborishda xatolik yuz berdi ({e}). Keyingi savolga o'tilmoqda..."
+                )
+                await asyncio.sleep(2)
+                async with self.db.get_connection() as conn:
+                    new_idx = comp.current_question_index + 1
+                    await queries.update_group_competition(conn, comp.id, current_question_index=new_idx)
+                    updated_comp = await queries.get_group_competition(conn, comp.id)
+                if updated_comp:
+                    await self.send_group_question(updated_comp, lang=lang)
+            except Exception as inner_e:
+                logger.error(f"Error recovering from send_poll failure: {inner_e}")
             return
 
         poll_id = poll_msg.poll.id
@@ -284,3 +302,50 @@ class GroupQuizEngine:
             await self.bot.send_message(chat_id=comp.chat_id, text=final_text, parse_mode="HTML")
         except Exception as e:
             logger.error(f"Error posting final group leaderboard: {e}")
+
+    async def stop_competition(self, chat_id: int, lang: str = "uz"):
+        """Cancel the active competition in chat and show final results."""
+        async with self.db.get_connection() as conn:
+            comp = await queries.get_active_group_competition(conn, chat_id)
+            if not comp:
+                await self.bot.send_message(chat_id=chat_id, text="ℹ️ Guruhda faol musobaqa yo'q.")
+                return
+
+        cancel_group_timer(comp.id)
+        await self.finish_competition(comp, lang=lang)
+
+    async def process_group_answer(self, callback: CallbackQuery, comp_id: int, question_id: int, selected_option: str, lang: str = "uz"):
+        """Handle inline button answer if fallback buttons are clicked."""
+        user = callback.from_user
+        async with self.db.get_connection() as conn:
+            comp = await queries.get_group_competition(conn, comp_id)
+            if not comp or comp.status != "active":
+                await callback.answer("Musobaqa yakunlangan.", show_alert=True)
+                return
+
+            question = await queries.get_question(conn, question_id)
+            if not question:
+                return
+
+            correct_opt = next((o for o in question.options if o.is_correct), None)
+            is_correct = (correct_opt is not None and correct_opt.option_label == selected_option)
+            full_name = f"{user.first_name} {user.last_name or ''}".strip()
+
+            await queries.record_group_answer(
+                conn,
+                competition_id=comp_id,
+                question_id=question_id,
+                user_id=user.id,
+                username=user.username,
+                full_name=full_name,
+                selected_option=selected_option,
+                is_correct=is_correct,
+                response_time_seconds=1.0,
+                points=10 if is_correct else 0
+            )
+
+        if is_correct:
+            await callback.answer("✅ To'g'ri javob! (+10 ball)", show_alert=False)
+        else:
+            await callback.answer(f"❌ Noto'g'ri! To'g'ri javob: {correct_opt.option_label if correct_opt else ''}", show_alert=False)
+
