@@ -1,9 +1,13 @@
+import os
+import csv
 import time
 import logging
 from pathlib import Path
-from typing import Dict, Any, List, Tuple, Optional
+from typing import List, Dict, Any, Tuple, Optional
 import gc
+import openpyxl
 
+from bot.database.models import Question
 from bot.utils.validator import normalize_column_name, validate_row
 
 logger = logging.getLogger(__name__)
@@ -15,9 +19,17 @@ class ImportResult:
         self.valid_count: int = 0
         self.invalid_count: int = 0
         self.duplicate_count: int = 0
-        self.duration_seconds: float = 0.0
-        self.valid_questions: List[Dict[str, Any]] = []
         self.errors: List[str] = []
+        self.valid_questions: List[Dict[str, Any]] = []
+        self.duration_seconds: float = 0.0
+
+    @property
+    def is_success(self) -> bool:
+        return self.valid_count > 0 and len(self.errors) == 0
+
+    @property
+    def has_partial(self) -> bool:
+        return self.valid_count > 0 and (self.invalid_count > 0 or self.duplicate_count > 0)
 
     def get_summary_text(self, max_errors: int = 8) -> str:
         error_sample = ""
@@ -29,68 +41,93 @@ class ImportResult:
 
 def parse_import_file(file_path: Path, max_rows: int = 50000) -> ImportResult:
     """
-    Parse and validate questions from an Excel (.xlsx) or CSV file.
-    Supports 10,000+ questions with high performance.
+    Parse and validate questions from an Excel (.xlsx) or CSV file using openpyxl & csv.
+    Supports 10,000+ questions with high performance without heavy pandas.
     """
-    import pandas as pd
     start_time = time.time()
     file_path = Path(file_path)
     result = ImportResult(file_path.name)
 
-    # 1. Load DataFrame
     ext = file_path.suffix.lower()
-    df = None
+    raw_records = []
+
     if ext in (".xlsx", ".xls"):
-        df = pd.read_excel(file_path, dtype=str)
+        try:
+            wb = openpyxl.load_workbook(file_path, read_only=True, data_only=True)
+            ws = wb.active
+            rows_iter = ws.iter_rows(values_only=True)
+            try:
+                raw_headers = next(rows_iter)
+            except StopIteration:
+                result.errors.append("The uploaded file contains no data.")
+                return result
+
+            headers = [normalize_column_name(str(h or "").strip()) for h in raw_headers]
+            for row in rows_iter:
+                if not any(row):
+                    continue
+                row_dict = {}
+                for i, val in enumerate(row):
+                    if i < len(headers) and headers[i]:
+                        row_dict[headers[i]] = str(val).strip() if val is not None else ""
+                raw_records.append(row_dict)
+                if len(raw_records) >= max_rows:
+                    break
+            wb.close()
+        except Exception as e:
+            result.errors.append(f"Error reading Excel file: {e}")
+            return result
+
     elif ext == ".csv":
-        # Detect encoding and delimiter
         encodings = ["utf-8-sig", "utf-8", "cp1251", "latin1"]
+        decoded = False
         for enc in encodings:
             try:
-                # Try comma first
-                df = pd.read_csv(file_path, encoding=enc, dtype=str, sep=None, engine="python")
+                with open(file_path, mode="r", encoding=enc) as f:
+                    reader = csv.reader(f)
+                    try:
+                        raw_headers = next(reader)
+                    except StopIteration:
+                        result.errors.append("The uploaded file contains no data.")
+                        return result
+                    headers = [normalize_column_name(str(h or "").strip()) for h in raw_headers]
+                    for row in reader:
+                        if not any(row):
+                            continue
+                        row_dict = {}
+                        for i, val in enumerate(row):
+                            if i < len(headers) and headers[i]:
+                                row_dict[headers[i]] = str(val).strip() if val is not None else ""
+                        raw_records.append(row_dict)
+                        if len(raw_records) >= max_rows:
+                            break
+                decoded = True
                 break
             except Exception:
                 continue
-        if df is None:
+        if not decoded:
             result.errors.append("Unable to decode CSV file. Please ensure UTF-8 encoding.")
             return result
     else:
         result.errors.append(f"Unsupported file format '{ext}'. Only .xlsx and .csv are supported.")
         return result
 
-    if df is None or df.empty:
+    if not raw_records:
         result.errors.append("The uploaded file contains no data or could not be read.")
         return result
 
-    # 2. Normalize column headers
-    col_mapping = {}
-    for col in df.columns:
-        norm = normalize_column_name(col)
-        if norm:
-            col_mapping[col] = norm
-
-    df = df.rename(columns=col_mapping)
-
     required_columns = ["question", "option_a", "option_b", "option_c", "option_d", "correct_answer"]
-    missing_required = [c for c in required_columns if c not in df.columns]
+    sample_keys = raw_records[0].keys() if raw_records else []
+    missing_required = [c for c in required_columns if c not in sample_keys]
     if missing_required:
         result.errors.append(f"Missing required columns: {', '.join(missing_required)}")
         return result
 
-    # Limit maximum rows to prevent memory explosion if malicious file
-    if len(df) > max_rows:
-        df = df.iloc[:max_rows]
-
-    result.total_rows = len(df)
+    result.total_rows = len(raw_records)
     seen_questions = set()
 
-    # 3. Validate rows
-    # Convert df to records for fastest iteration
-    records = df.to_dict(orient="records")
-
-    for idx, raw_row in enumerate(records):
-        excel_row_num = idx + 2  # 1-based index + 1 for header row
+    for idx, raw_row in enumerate(raw_records):
+        excel_row_num = idx + 2
         is_valid, parsed_dict, err_msg = validate_row(excel_row_num, raw_row, seen_questions)
 
         if is_valid and parsed_dict:
@@ -111,16 +148,11 @@ def parse_import_file(file_path: Path, max_rows: int = 50000) -> ImportResult:
         f"Parsed {file_path.name}: {result.valid_count} valid, "
         f"{result.invalid_count} invalid, {result.duplicate_count} dups in {result.duration_seconds}s"
     )
-    try:
-        del df
-    except Exception:
-        pass
     gc.collect()
     return result
 
 def create_sample_excel_template(target_path: Path) -> Path:
     """Generate sample Excel file with sample questions in English and Uzbek."""
-    import pandas as pd
     target_path = Path(target_path)
     target_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -192,15 +224,26 @@ def create_sample_excel_template(target_path: Path) -> Path:
         }
     ]
 
-    df = pd.DataFrame(data)
-    with pd.ExcelWriter(target_path, engine="openpyxl") as writer:
-        df.to_excel(writer, index=False, sheet_name="Questions")
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Questions"
 
+    headers = ["question", "option_a", "option_b", "option_c", "option_d", "correct_answer", "explanation", "topic", "difficulty", "timer", "image"]
+    ws.append(headers)
+
+    for item in data:
+        ws.append([item.get(h, "") for h in headers])
+
+    for col in ws.columns:
+        max_len = max(len(str(cell.value or "")) for cell in col)
+        col_letter = col[0].column_letter
+        ws.column_dimensions[col_letter].width = max(max_len + 4, 15)
+
+    wb.save(target_path)
     return target_path
 
 def create_sample_csv_template(target_path: Path) -> Path:
     """Generate sample CSV file with UTF-8 encoding."""
-    import csv
     target_path = Path(target_path)
     target_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -219,22 +262,22 @@ def create_sample_csv_template(target_path: Path) -> Path:
             "image": ""
         },
         {
-            "question": "Which data structure in Python is mutable and unordered?",
-            "option_a": "tuple",
-            "option_b": "str",
-            "option_c": "set",
-            "option_d": "int",
-            "correct_answer": "C",
-            "explanation": "Sets are mutable collections of unique unordered items.",
-            "topic": "Programming",
+            "question": "Tibbiyot qonunlari asari kim tomonidan yozilgan?",
+            "option_a": "Abu Rayhon Beruniy",
+            "option_b": "Abu Ali ibn Sino",
+            "option_c": "Al-Xorazmiy",
+            "option_d": "Mirzo Ulug'bek",
+            "correct_answer": "B",
+            "explanation": "Tibbiyot qonunlari (Al-Qonun fit-tibb) Abu Ali ibn Sino qalamiga mansub.",
+            "topic": "Tarix",
             "difficulty": "Easy",
             "timer": 20,
             "image": ""
         }
     ]
 
-    fieldnames = list(data[0].keys())
-    with open(target_path, "w", newline="", encoding="utf-8-sig") as f:
+    fieldnames = ["question", "option_a", "option_b", "option_c", "option_d", "correct_answer", "explanation", "topic", "difficulty", "timer", "image"]
+    with open(target_path, mode="w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(data)
