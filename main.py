@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import sys
+import time
 from pathlib import Path
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
@@ -114,7 +115,12 @@ async def main():
         logger.info("Bot stopped successfully.")
 
 if __name__ == "__main__":
-    try:
-        asyncio.run(main())
-    except (KeyboardInterrupt, SystemExit):
-        logger.info("Process terminated by user.")
+    while True:
+        try:
+            asyncio.run(main())
+        except (KeyboardInterrupt, SystemExit):
+            logger.info("Process terminated by user.")
+            break
+        except Exception as e:
+            logger.error(f"Bot crashed with error: {e}. Auto-restarting in 5 seconds...", exc_info=True)
+            time.sleep(5)
