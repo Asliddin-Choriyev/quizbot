@@ -1,5 +1,6 @@
 import logging
 from aiogram import Router, F
+from aiogram.filters import Command
 from aiogram.types import CallbackQuery, Message, PollAnswer, InlineKeyboardMarkup, InlineKeyboardButton
 
 from bot.database.db import Database
@@ -42,6 +43,33 @@ async def handle_poll_answer(poll_answer: PollAnswer, db: Database, lang: str = 
     group_engine = GroupQuizEngine(bot=poll_answer.bot, db=db)
     await group_engine.process_group_poll_answer(poll_answer)
 
+@router.callback_query(F.data.startswith("quiz:pause:"))
+async def handle_pause_quiz(callback: CallbackQuery, db: Database, lang: str = "uz"):
+    session_id = int(callback.data.split(":")[2])
+    engine = QuizEngine(bot=callback.bot, db=db)
+
+    success = await engine.pause_quiz_session(
+        session_id=session_id,
+        user_id=callback.from_user.id,
+        lang=lang
+    )
+    if not success:
+        await callback.answer("Bu test faol emas yoki yakunlangan.", show_alert=True)
+        return
+
+    await callback.answer("⏸ Test pauzaga qo'yildi", show_alert=False)
+
+@router.message(Command("pause"))
+async def handle_pause_command(message: Message, db: Database, lang: str = "uz"):
+    async with db.get_connection() as conn:
+        session = await queries.get_active_session_for_user(conn, message.from_user.id)
+        if not session:
+            await message.answer("Sizda hozirda faol test mavjud emas." if lang == "uz" else "You don't have an active quiz session.")
+            return
+
+    engine = QuizEngine(bot=message.bot, db=db)
+    await engine.pause_quiz_session(session_id=session.id, user_id=message.from_user.id, lang=lang)
+
 @router.callback_query(F.data.startswith("quiz:resume:"))
 async def handle_resume_quiz(callback: CallbackQuery, db: Database, lang: str = "uz"):
     session_id = int(callback.data.split(":")[2])
@@ -54,6 +82,11 @@ async def handle_resume_quiz(callback: CallbackQuery, db: Database, lang: str = 
             return
 
     await callback.answer("▶️ Test davom ettirilmoqda...", show_alert=False)
+    try:
+        await callback.message.delete()
+    except Exception:
+        pass
+
     from bot.services.quiz_engine import reset_consecutive_timeouts
     reset_consecutive_timeouts(session.session_code)
     await engine.send_question(session, lang=lang)
@@ -70,6 +103,10 @@ async def handle_finish_quiz_early(callback: CallbackQuery, db: Database, lang: 
             return
 
     await callback.answer("⏹ Test yakunlanmoqda...", show_alert=False)
+    try:
+        await callback.message.delete()
+    except Exception:
+        pass
     await engine.finish_quiz(session, lang=lang)
 
 @router.callback_query(F.data.startswith("sess:review:"))

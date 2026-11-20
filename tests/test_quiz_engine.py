@@ -167,3 +167,47 @@ async def test_group_quiz_engine_progression_and_timeout(tmp_path: Path):
         assert len(participants) == 1
         assert participants[0].score == 10
 
+@pytest.mark.asyncio
+async def test_quiz_engine_manual_pause(tmp_path: Path):
+    db_file = tmp_path / "engine_pause_test.db"
+    db = Database(db_file)
+    await db.init()
+
+    mock_bot = AsyncMock()
+    mock_poll = MagicMock()
+    mock_poll.id = "poll_pause_123"
+    mock_poll_msg = MagicMock(message_id=505, poll=mock_poll)
+    mock_bot.send_poll.return_value = mock_poll_msg
+
+    engine = QuizEngine(bot=mock_bot, db=db)
+
+    async with db.get_connection() as conn:
+        quiz_id = await queries.create_quiz(conn, title="Pause Quiz", pass_percentage=60)
+        q_id = await queries.add_question(conn, quiz_id, "Pause Q?")
+        await queries.add_question_options(conn, q_id, [
+            {"option_label": "A", "option_text": "Option A", "is_correct": True},
+            {"option_label": "B", "option_text": "Option B", "is_correct": False},
+        ])
+
+    session = await engine.start_quiz_session(user_id=777, chat_id=777, quiz_id=quiz_id, lang="uz")
+    assert session is not None
+    assert mock_bot.send_poll.called
+    # Check reply_markup was passed to send_poll
+    call_kwargs = mock_bot.send_poll.call_args.kwargs
+    assert "reply_markup" in call_kwargs
+
+    # Unauthorized user cannot pause
+    paused_unauth = await engine.pause_quiz_session(session.id, user_id=999, lang="uz")
+    assert paused_unauth is False
+
+    # Authorized user pauses session
+    paused = await engine.pause_quiz_session(session.id, user_id=777, lang="uz")
+    assert paused is True
+    # Poll was deleted or stopped
+    assert mock_bot.delete_message.called or mock_bot.stop_poll.called
+    # Pause status message was sent
+    assert mock_bot.send_message.called
+    send_msg_kwargs = mock_bot.send_message.call_args.kwargs
+    assert "Pauza" in send_msg_kwargs.get("text", "") or "to'xtatildi" in send_msg_kwargs.get("text", "")
+
+

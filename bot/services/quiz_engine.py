@@ -11,7 +11,7 @@ import config
 from bot.database.db import Database
 from bot.database import queries
 from bot.database.models import Quiz, Question, QuizSession, QuestionOption
-from bot.keyboards.inline import get_quiz_completed_kb, get_quiz_paused_kb
+from bot.keyboards.inline import get_quiz_completed_kb, get_quiz_paused_kb, get_quiz_in_progress_kb
 from bot.utils.i18n import t
 from bot.utils.formatters import escape_html, format_duration
 
@@ -131,11 +131,14 @@ class QuizEngine:
                 exp_text = exp_text[:197] + "..."
 
         # Send question image if available
+        photo_msg_id = None
         if question.image_url:
             try:
                 cached_id = _cached_file_ids.get(question.image_url)
                 if cached_id:
-                    await self.bot.send_photo(chat_id=session.chat_id, photo=cached_id)
+                    p_msg = await self.bot.send_photo(chat_id=session.chat_id, photo=cached_id)
+                    if p_msg:
+                        photo_msg_id = p_msg.message_id
                 else:
                     img_path = Path(question.image_url)
                     if not img_path.is_absolute():
@@ -144,10 +147,12 @@ class QuizEngine:
                         photo_msg = await self.bot.send_photo(chat_id=session.chat_id, photo=FSInputFile(str(img_path)))
                         if photo_msg and photo_msg.photo:
                             _cached_file_ids[question.image_url] = photo_msg.photo[-1].file_id
+                            photo_msg_id = photo_msg.message_id
                     elif question.image_url.startswith(("http://", "https://")):
                         photo_msg = await self.bot.send_photo(chat_id=session.chat_id, photo=question.image_url)
                         if photo_msg and photo_msg.photo:
                             _cached_file_ids[question.image_url] = photo_msg.photo[-1].file_id
+                            photo_msg_id = photo_msg.message_id
             except Exception as e:
                 logger.warning(f"Error sending quiz question image: {e}")
 
@@ -160,7 +165,8 @@ class QuizEngine:
                 correct_option_id=correct_idx,
                 explanation=exp_text,
                 open_period=timer,
-                is_anonymous=False
+                is_anonymous=False,
+                reply_markup=get_quiz_in_progress_kb(session.id, lang=lang)
             )
         except Exception as e:
             logger.error(f"Error sending quiz poll: {e}")
@@ -172,6 +178,7 @@ class QuizEngine:
             "session_code": session.session_code,
             "session_id": session.id,
             "message_id": poll_msg.message_id,
+            "photo_message_id": photo_msg_id,
             "quiz_id": session.quiz_id,
             "question_id": question.id,
             "user_id": session.user_id,
@@ -328,6 +335,85 @@ class QuizEngine:
 
         # Move to next question immediately, restarting timer from beginning
         await self.send_question(session, lang=lang)
+
+    async def pause_quiz_session(self, session_id: int, user_id: int, lang: str = "uz") -> bool:
+        """Manually pause an ongoing quiz session, cancel its timer, remove pending poll, and show paused controls."""
+        async with self.db.get_connection() as conn:
+            session = await queries.get_session(conn, session_id)
+            if not session or session.status != "in_progress":
+                return False
+            if session.user_id != user_id:
+                return False
+
+        # Cancel active timer task
+        cancel_session_timer(session.session_code)
+        reset_consecutive_timeouts(session.session_code)
+
+        # Find active poll from registry
+        found_poll_id = None
+        poll_info = None
+        for pid, pdata in list(_active_individual_polls.items()):
+            if pdata.get("session_id") == session.id or pdata.get("session_code") == session.session_code:
+                found_poll_id = pid
+                poll_info = pdata
+                break
+
+        if found_poll_id:
+            _active_individual_polls.pop(found_poll_id, None)
+
+        # Clean up the uncompleted poll and photo so user cannot click or see answers while paused
+        if poll_info:
+            chat_id = poll_info.get("chat_id", session.chat_id)
+            poll_msg_id = poll_info.get("message_id")
+            photo_msg_id = poll_info.get("photo_message_id")
+
+            if poll_msg_id:
+                try:
+                    await self.bot.delete_message(chat_id=chat_id, message_id=poll_msg_id)
+                except Exception:
+                    try:
+                        await self.bot.stop_poll(chat_id=chat_id, message_id=poll_msg_id)
+                    except Exception:
+                        pass
+
+            if photo_msg_id:
+                try:
+                    await self.bot.delete_message(chat_id=chat_id, message_id=photo_msg_id)
+                except Exception:
+                    pass
+
+        curr_q = session.current_question_index + 1
+        total_q = session.total_questions
+        correct_cnt = session.correct_count
+        incorrect_cnt = session.incorrect_count
+
+        if lang == "uz":
+            pause_text = (
+                f"⏸ <b>Test vaqtincha to'xtatildi (pauza)</b>\n\n"
+                f"📊 <b>Hozirgi holat:</b>\n"
+                f"• Savol: <b>{curr_q}/{total_q}</b>\n"
+                f"• To'g'ri javoblar: <b>{correct_cnt}</b> ta\n"
+                f"• Noto'g'ri javoblar: <b>{incorrect_cnt}</b> ta\n\n"
+                f"Tayyor bo'lganingizda davom ettirishingiz yoki testni yakunlashingiz mumkin:"
+            )
+        else:
+            pause_text = (
+                f"⏸ <b>Quiz Paused</b>\n\n"
+                f"📊 <b>Current Progress:</b>\n"
+                f"• Question: <b>{curr_q}/{total_q}</b>\n"
+                f"• Correct: <b>{correct_cnt}</b>\n"
+                f"• Incorrect: <b>{incorrect_cnt}</b>\n\n"
+                f"You can resume or finish whenever you are ready:"
+            )
+
+        kb = get_quiz_paused_kb(session.id, lang=lang)
+        await self.bot.send_message(
+            chat_id=session.chat_id,
+            text=pause_text,
+            reply_markup=kb,
+            parse_mode="HTML"
+        )
+        return True
 
     async def finish_quiz(self, session: QuizSession, lang: str = "uz"):
         """Compute final metrics and render the completion score card."""

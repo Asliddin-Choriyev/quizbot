@@ -146,6 +146,16 @@ def get_quiz_completed_kb(session_id: int, quiz_id: int, has_mistakes: bool = Tr
     ])
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
+def get_quiz_in_progress_kb(session_id: int, lang: str = "uz") -> InlineKeyboardMarkup:
+    pause_text = "⏸ Pauza" if lang == "uz" else "⏸ Pause"
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text=pause_text, callback_data=f"quiz:pause:{session_id}")
+            ]
+        ]
+    )
+
 def get_quiz_paused_kb(session_id: int, lang: str = "uz") -> InlineKeyboardMarkup:
     resume_text = "▶️ Testni davom ettirish" if lang == "uz" else "▶️ Resume Quiz"
     finish_text = "⏹ Testni yakunlash" if lang == "uz" else "⏹ Finish Quiz"
