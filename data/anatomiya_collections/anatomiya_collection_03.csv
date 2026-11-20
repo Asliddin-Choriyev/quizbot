@@ -1,0 +1,17 @@
+﻿question,option_a,option_b,option_c,option_d,correct_answer,explanation,topic,difficulty,timer,image
+Rasmda 1-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Os sacrum,Femur,Tibia,Os coxae,A,1 — Os sacrum,Oyoq suyaklari,Medium,25,data/images/anatomiya_img_05.png
+Rasmda 2-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Tibia,Femur,Os coxae,Patella,C,2 — Os coxae,Oyoq suyaklari,Medium,25,data/images/anatomiya_img_05.png
+Rasmda 3-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Femur,Fibula,Ossa pedis,Patella,A,3 — Femur,Oyoq suyaklari,Medium,25,data/images/anatomiya_img_05.png
+Rasmda 4-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Os coxae,Tibia,Os sacrum,Patella,D,4 — Patella,Oyoq suyaklari,Medium,25,data/images/anatomiya_img_05.png
+Rasmda 5-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Os coxae,Ossa pedis,Fibula,Tibia,C,5 — Fibula,Oyoq suyaklari,Medium,25,data/images/anatomiya_img_05.png
+Rasmda 6-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Os sacrum,Ossa pedis,Os coxae,Tibia,D,6 — Tibia,Oyoq suyaklari,Medium,25,data/images/anatomiya_img_05.png
+Rasmda 7-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Ossa pedis,Os sacrum,Os coxae,Fibula,A,7 — Ossa pedis,Oyoq suyaklari,Medium,25,data/images/anatomiya_img_05.png
+Rasmda 1-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Trochlea humeri,Capitulum humeri,Tuberculum majus,Tuberositas deltoidea,C,1 — Tuberculum majus,Yelka suyagi (Humerus),Medium,25,data/images/anatomiya_img_06.png
+Rasmda 2-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Tuberculum majus,Tuberculum minus,Tuberositas deltoidea,Sulcus intertubercularis,D,2 — Sulcus intertubercularis,Yelka suyagi (Humerus),Medium,25,data/images/anatomiya_img_06.png
+Rasmda 3-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Fossa coronoidea,Tuberositas deltoidea,Capitulum humeri,Tuberculum minus,B,3 — Tuberositas deltoidea,Yelka suyagi (Humerus),Medium,25,data/images/anatomiya_img_06.png
+Rasmda 4-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Sulcus intertubercularis,Capitulum humeri,Fossa radialis,Tuberculum majus,C,4 — Fossa radialis,Yelka suyagi (Humerus),Medium,25,data/images/anatomiya_img_06.png
+Rasmda 5-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Sulcus intertubercularis,Fossa radialis,Capitulum humeri,Trochlea humeri,C,5 — Capitulum humeri,Yelka suyagi (Humerus),Medium,25,data/images/anatomiya_img_06.png
+Rasmda 6-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Caput humeri,Fossa radialis,Trochlea humeri,Tuberositas deltoidea,C,6 — Trochlea humeri,Yelka suyagi (Humerus),Medium,25,data/images/anatomiya_img_06.png
+Rasmda 7-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Sulcus intertubercularis,Tuberculum majus,Trochlea humeri,Fossa coronoidea,D,7 — Fossa coronoidea,Yelka suyagi (Humerus),Medium,25,data/images/anatomiya_img_06.png
+Rasmda 8-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Fossa radialis,Tuberositas deltoidea,Tuberculum minus,Fossa coronoidea,C,8 — Tuberculum minus,Yelka suyagi (Humerus),Medium,25,data/images/anatomiya_img_06.png
+Rasmda 9-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Fossa radialis,Sulcus intertubercularis,Tuberculum majus,Caput humeri,D,9 — Caput humeri,Yelka suyagi (Humerus),Medium,25,data/images/anatomiya_img_06.png

@@ -1,0 +1,15 @@
+﻿question,option_a,option_b,option_c,option_d,correct_answer,explanation,topic,difficulty,timer,image
+Rasmda 1-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Nucleus ruber,Cerebellum,Insula,Putamen,C,1 — Insula,Bosh miya yadrolari,Medium,25,data/images/anatomiya_img_33.png
+Rasmda 2-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Putamen,Globus pallidus,Capsula externa,Insula,A,2 — Putamen,Bosh miya yadrolari,Medium,25,data/images/anatomiya_img_33.png
+Rasmda 3-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Ventriculus tertius,Cerebellum,Insula,Claustrum,D,3 — Claustrum,Bosh miya yadrolari,Medium,25,data/images/anatomiya_img_33.png
+Rasmda 4-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Thalamus opticus,Globus pallidus,Capsula externa,Putamen,C,4 — Capsula externa,Bosh miya yadrolari,Medium,25,data/images/anatomiya_img_33.png
+Rasmda 5-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Claustrum,Capsula externa,Insula,Globus pallidus,D,5 — Globus pallidus,Bosh miya yadrolari,Medium,25,data/images/anatomiya_img_33.png
+Rasmda 6-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Cerebellum,Ventriculus tertius,Insula,Thalamus opticus,B,6 — Ventriculus tertius,Bosh miya yadrolari,Medium,25,data/images/anatomiya_img_33.png
+Rasmda 7-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Putamen,Nucleus ruber,Capsula externa,Ventriculus tertius,B,7 — Nucleus ruber,Bosh miya yadrolari,Medium,25,data/images/anatomiya_img_33.png
+Rasmda 8-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Ventriculus tertius,Putamen,Thalamus opticus,Globus pallidus,C,8 — Thalamus opticus,Bosh miya yadrolari,Medium,25,data/images/anatomiya_img_33.png
+Rasmda 9-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Globus pallidus,Insula,Ventriculus tertius,Cerebellum,D,9 — Cerebellum,Bosh miya yadrolari,Medium,25,data/images/anatomiya_img_33.png
+Rasmda 1-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Ventriculus tertius,Foramen interventriculare,Ventriculus lateralis,Aqueductus cerebri,B,1 — Foramen interventriculare,Bosh miya qorinchalari,Medium,25,data/images/anatomiya_img_34.png
+Rasmda 2-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Ventriculus tertius,Ventriculus lateralis,Foramen interventriculare,Aqueductus cerebri,B,2 — Ventriculus lateralis,Bosh miya qorinchalari,Medium,25,data/images/anatomiya_img_34.png
+Rasmda 3-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Ventriculus tertius,Aqueductus cerebri,Ventriculus quartus,Foramen interventriculare,A,3 — Ventriculus tertius,Bosh miya qorinchalari,Medium,25,data/images/anatomiya_img_34.png
+Rasmda 4-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Ventriculus lateralis,Aqueductus cerebri,Ventriculus tertius,Ventriculus quartus,B,4 — Aqueductus cerebri,Bosh miya qorinchalari,Medium,25,data/images/anatomiya_img_34.png
+Rasmda 5-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Foramen interventriculare,Aqueductus cerebri,Ventriculus lateralis,Ventriculus quartus,D,5 — Ventriculus quartus,Bosh miya qorinchalari,Medium,25,data/images/anatomiya_img_34.png

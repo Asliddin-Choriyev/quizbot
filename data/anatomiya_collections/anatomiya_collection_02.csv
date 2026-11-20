@@ -1,0 +1,16 @@
+﻿question,option_a,option_b,option_c,option_d,correct_answer,explanation,topic,difficulty,timer,image
+Rasmda 1-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Vertebra coccygea,Vertebra lumbalis,Vertebra cervicalis,Vertebra sacralia,C,1 — Vertebra cervicalis,Umurtqa pog'onasi,Medium,25,data/images/anatomiya_img_03.png
+Rasmda 2-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Vertebra cervicalis,Vertebra coccygea,Vertebra thoracica,Vertebra sacralia,C,2 — Vertebra thoracica,Umurtqa pog'onasi,Medium,25,data/images/anatomiya_img_03.png
+Rasmda 3-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Vertebra lumbalis,Vertebra sacralia,Atlas,Vertebra thoracica,A,3 — Vertebra lumbalis,Umurtqa pog'onasi,Medium,25,data/images/anatomiya_img_03.png
+Rasmda 4-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Vertebra sacralia,Processus transversus,Vertebra lumbalis,Vertebra thoracica,A,4 — Vertebra sacralia,Umurtqa pog'onasi,Medium,25,data/images/anatomiya_img_03.png
+Rasmda 5-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Atlas,Vertebra coccygea,Processus transversus,Vertebra sacralia,B,5 — Vertebra coccygea,Umurtqa pog'onasi,Medium,25,data/images/anatomiya_img_03.png
+Rasmda 6-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Vertebra thoracica,Vertebra coccygea,Vertebra sacralia,Atlas,D,6 — Atlas,Umurtqa pog'onasi,Medium,25,data/images/anatomiya_img_03.png
+Rasmda 7-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Vertebra sacralia,Atlas,Vertebra thoracica,Processus transversus,D,7 — Processus transversus,Umurtqa pog'onasi,Medium,25,data/images/anatomiya_img_03.png
+Rasmda 1-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Ossa carpi,Clavicula,Ossa digitorum manus,Ulna,B,1 — Clavicula,Qo'l suyaklari,Medium,25,data/images/anatomiya_img_04.png
+Rasmda 2-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Scapula,Ossa metacarpi,Clavicula,Ossa digitorum manus,A,2 — Scapula,Qo'l suyaklari,Medium,25,data/images/anatomiya_img_04.png
+Rasmda 3-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Radius,Humerus,Ulna,Clavicula,B,3 — Humerus,Qo'l suyaklari,Medium,25,data/images/anatomiya_img_04.png
+Rasmda 4-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Humerus,Radius,Ossa digitorum manus,Ossa metacarpi,B,4 — Radius,Qo'l suyaklari,Medium,25,data/images/anatomiya_img_04.png
+Rasmda 5-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Ossa metacarpi,Humerus,Ulna,Ossa digitorum manus,C,5 — Ulna,Qo'l suyaklari,Medium,25,data/images/anatomiya_img_04.png
+Rasmda 6-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Ulna,Ossa digitorum manus,Scapula,Ossa carpi,D,6 — Ossa carpi,Qo'l suyaklari,Medium,25,data/images/anatomiya_img_04.png
+Rasmda 7-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Ossa carpi,Ossa metacarpi,Radius,Clavicula,B,7 — Ossa metacarpi,Qo'l suyaklari,Medium,25,data/images/anatomiya_img_04.png
+Rasmda 8-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Scapula,Clavicula,Ulna,Ossa digitorum manus,D,8 — Ossa digitorum manus,Qo'l suyaklari,Medium,25,data/images/anatomiya_img_04.png

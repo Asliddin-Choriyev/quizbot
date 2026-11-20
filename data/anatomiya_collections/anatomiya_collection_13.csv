@@ -1,0 +1,17 @@
+﻿question,option_a,option_b,option_c,option_d,correct_answer,explanation,topic,difficulty,timer,image
+Rasmda 1-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Lig. gastrolienale,Lig. gastroduodenale,Lig. gastropancreaticum,Lig. gastrophrenicum,C,1 — Lig. gastropancreaticum,Oshqozon boylamlari,Medium,25,data/images/anatomiya_img_25.png
+Rasmda 2-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Lig. pyloropancreaticum,Lig. gastrolienale,Lig. gastropancreaticum,Lig. gastrophrenicum,A,2 — Lig. pyloropancreaticum,Oshqozon boylamlari,Medium,25,data/images/anatomiya_img_25.png
+Rasmda 3-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Lig. pyloropancreaticum,Lig. gastropancreaticum,Lig. gastrolienale,Lig. gastrophrenicum,D,3 — Lig. gastrophrenicum,Oshqozon boylamlari,Medium,25,data/images/anatomiya_img_25.png
+Rasmda 4-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Lig. gastrolienale,Lig. gastropancreaticum,Lig. gastroduodenale,Lig. hepatogastricum,A,4 — Lig. gastrolienale,Oshqozon boylamlari,Medium,25,data/images/anatomiya_img_25.png
+Rasmda 5-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Lig. gastroduodenale,Lig. gastrocolicum,Lig. hepatogastricum,Lig. gastropancreaticum,B,5 — Lig. gastrocolicum,Oshqozon boylamlari,Medium,25,data/images/anatomiya_img_25.png
+Rasmda 6-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Lig. gastrocolicum,Lig. gastroduodenale,Lig. gastropancreaticum,Lig. gastrophrenicum,B,6 — Lig. gastroduodenale,Oshqozon boylamlari,Medium,25,data/images/anatomiya_img_25.png
+Rasmda 7-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Lig. gastropancreaticum,Lig. hepatogastricum,Lig. gastrolienale,Lig. gastrocolicum,B,7 — Lig. hepatogastricum,Oshqozon boylamlari,Medium,25,data/images/anatomiya_img_25.png
+Rasmda 1-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Os zygomaticum,Mandibula,Os lacrimale,Os parietale,D,1 — Os parietale,Kalla suyagi (Cranium),Medium,25,data/images/anatomiya_img_26.png
+Rasmda 2-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Os frontale,Os temporale,Os sphenoidale,Os parietale,A,2 — Os frontale,Kalla suyagi (Cranium),Medium,25,data/images/anatomiya_img_26.png
+Rasmda 3-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Os sphenoidale,Mandibula,Maxilla,Os nasale,A,3 — Os sphenoidale,Kalla suyagi (Cranium),Medium,25,data/images/anatomiya_img_26.png
+Rasmda 4-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Os frontale,Os zygomaticum,Maxilla,Os temporale,D,4 — Os temporale,Kalla suyagi (Cranium),Medium,25,data/images/anatomiya_img_26.png
+Rasmda 5-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Os lacrimale,Os temporale,Maxilla,Os frontale,A,5 — Os lacrimale,Kalla suyagi (Cranium),Medium,25,data/images/anatomiya_img_26.png
+Rasmda 6-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Os zygomaticum,Os temporale,Maxilla,Os nasale,D,6 — Os nasale,Kalla suyagi (Cranium),Medium,25,data/images/anatomiya_img_26.png
+Rasmda 7-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Os sphenoidale,Os nasale,Os zygomaticum,Mandibula,C,7 — Os zygomaticum,Kalla suyagi (Cranium),Medium,25,data/images/anatomiya_img_26.png
+Rasmda 8-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Os parietale,Os zygomaticum,Os frontale,Maxilla,D,8 — Maxilla,Kalla suyagi (Cranium),Medium,25,data/images/anatomiya_img_26.png
+Rasmda 9-raqam bilan qaysi anatomik tuzilma ko'rsatilgan?,Os frontale,Os nasale,Os zygomaticum,Mandibula,D,9 — Mandibula,Kalla suyagi (Cranium),Medium,25,data/images/anatomiya_img_26.png
