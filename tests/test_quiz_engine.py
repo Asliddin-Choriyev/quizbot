@@ -236,11 +236,11 @@ def test_share_permissions_and_landing_kb():
     assert len(auth_switches) == 1
     assert auth_switches[0] == "1"
 
-    # Verify "Guruhda testni boshlash" (startgroup) is completely removed for all users
+    # Verify "Guruhda testni boshlash" (startgroup) is hidden for students, but available for authorized users
     all_student_urls = [btn.url for row in kb_student.inline_keyboard for btn in row if btn.url]
     all_auth_urls = [btn.url for row in kb_auth.inline_keyboard for btn in row if btn.url]
     assert not any("startgroup" in url for url in all_student_urls)
-    assert not any("startgroup" in url for url in all_auth_urls)
+    assert any("startgroup" in url for url in all_auth_urls)
 
 
 

@@ -84,7 +84,11 @@ def get_quiz_landing_kb(
     lang: str = "uz",
     can_share: bool = False
 ) -> InlineKeyboardMarkup:
+    bot_name = bot_username or "quizzes_makerbot"
+    group_link = f"https://t.me/{bot_name}?startgroup=quiz_{quiz_id}"
+
     start_text = t("btn_start_quiz", lang)
+    group_text = t("btn_start_in_group", lang)
     share_text = t("btn_share_quiz", lang)
 
     rows = [
@@ -94,6 +98,9 @@ def get_quiz_landing_kb(
     ]
 
     if can_share:
+        rows.append([
+            InlineKeyboardButton(text=group_text, url=group_link)
+        ])
         rows.append([
             InlineKeyboardButton(text=share_text, switch_inline_query=str(quiz_id))
         ])
