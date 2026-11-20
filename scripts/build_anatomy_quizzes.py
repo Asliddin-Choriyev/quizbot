@@ -574,24 +574,24 @@ DIAGRAMS = [
 
 # Pair every 2 diagrams into 18 collections:
 COLLECTION_METADATA = [
-    (1, 2, "Anatomiya 1: Umurtqa va Dumg'aza suyaklari"),
-    (3, 4, "Anatomiya 2: Umurtqa pog'onasi va Qo'l suyaklari"),
-    (5, 6, "Anatomiya 3: Oyoq va Yelka suyaklari"),
-    (7, 8, "Anatomiya 4: Son va Boldir suyaklari"),
-    (9, 10, "Anatomiya 5: Chanoq suyagi va To'sh-o'mrov bo'g'imi"),
-    (11, 12, "Anatomiya 6: Umurtqalararo boylamlar va Yelka bo'g'imi"),
-    (13, 14, "Anatomiya 7: Chanoq-son va Tizza bo'g'imlari"),
-    (15, 16, "Anatomiya 8: Ko'krak, qorin va orqa mushaklari"),
-    (17, 18, "Anatomiya 9: Son va boldir mushaklari"),
-    (19, 20, "Anatomiya 10: Qorin a'zolari va Qo'l mushaklari"),
-    (21, 22, "Anatomiya 11: Hazm tizimi va Darvoza venasi"),
-    (22, 24, "Anatomiya 12: Jigar va Oshqozon anatomiyasi"),  # 23, 24
-    (25, 26, "Anatomiya 13: Oshqozon boylamlari va Kalla suyagi"),
-    (27, 28, "Anatomiya 14: Peshona va Ensa suyaklari"),
-    (29, 30, "Anatomiya 15: Miya arteriyalari va Bo'ylama kesimi"),
-    (31, 32, "Anatomiya 16: Uzunchoq miya va Miya bo'laklari"),
-    (33, 34, "Anatomiya 17: Bosh miya yadrolari va Qorinchalari"),
-    (35, 36, "Anatomiya 18: Miyacha va Eshitish a'zolari"),
+    (1, 2, "1-rasm, 2-rasm"),
+    (3, 4, "3-rasm, 4-rasm"),
+    (5, 6, "5-rasm, 6-rasm"),
+    (7, 8, "7-rasm, 8-rasm"),
+    (9, 10, "9-rasm, 10-rasm"),
+    (11, 12, "11-rasm, 12-rasm"),
+    (13, 14, "13-rasm, 14-rasm"),
+    (15, 16, "15-rasm, 16-rasm"),
+    (17, 18, "17-rasm, 18-rasm"),
+    (19, 20, "19-rasm, 20-rasm"),
+    (21, 22, "21-rasm, 22-rasm"),
+    (23, 24, "23-rasm, 24-rasm"),
+    (25, 26, "25-rasm, 26-rasm"),
+    (27, 28, "27-rasm, 28-rasm"),
+    (29, 30, "29-rasm, 30-rasm"),
+    (31, 32, "31-rasm, 32-rasm"),
+    (33, 34, "33-rasm, 34-rasm"),
+    (35, 36, "35-rasm, 36-rasm"),
 ]
 
 # Fix collection 12 tuple (23, 24)

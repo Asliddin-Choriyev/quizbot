@@ -58,7 +58,11 @@ def get_language_kb() -> InlineKeyboardMarkup:
 def get_quiz_list_kb(quizzes: List[Quiz], page: int = 0, total_count: int = 0, page_size: int = 6, lang: str = "uz") -> InlineKeyboardMarkup:
     rows = []
     for q in quizzes:
-        title = f"{q.title} ({q.question_count} Qs)"
+        if "ta savol" in q.title or "Qs" in q.title:
+            title = q.title
+        else:
+            q_label = "ta savol" if lang == "uz" else "Qs"
+            title = f"{q.title} ({q.question_count} {q_label})"
         rows.append([InlineKeyboardButton(text=title, callback_data=f"quiz:view:{q.id}")])
 
     # Pagination buttons

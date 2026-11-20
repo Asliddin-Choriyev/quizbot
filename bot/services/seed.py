@@ -9,24 +9,24 @@ from bot.database import queries
 logger = logging.getLogger(__name__)
 
 ANATOMY_COLLECTIONS = [
-    (1, "Anatomiya 1: Umurtqa va Dumg'aza suyaklari", "anatomiya_collection_01.csv"),
-    (2, "Anatomiya 2: Umurtqa pog'onasi va Qo'l suyaklari", "anatomiya_collection_02.csv"),
-    (3, "Anatomiya 3: Oyoq va Yelka suyaklari", "anatomiya_collection_03.csv"),
-    (4, "Anatomiya 4: Son va Boldir suyaklari", "anatomiya_collection_04.csv"),
-    (5, "Anatomiya 5: Chanoq suyagi va To'sh-o'mrov bo'g'imi", "anatomiya_collection_05.csv"),
-    (6, "Anatomiya 6: Umurtqalararo boylamlar va Yelka bo'g'imi", "anatomiya_collection_06.csv"),
-    (7, "Anatomiya 7: Chanoq-son va Tizza bo'g'imlari", "anatomiya_collection_07.csv"),
-    (8, "Anatomiya 8: Ko'krak, qorin va orqa mushaklari", "anatomiya_collection_08.csv"),
-    (9, "Anatomiya 9: Son va boldir mushaklari", "anatomiya_collection_09.csv"),
-    (10, "Anatomiya 10: Qorin a'zolari va Qo'l mushaklari", "anatomiya_collection_10.csv"),
-    (11, "Anatomiya 11: Hazm tizimi va Darvoza venasi", "anatomiya_collection_11.csv"),
-    (12, "Anatomiya 12: Jigar va Oshqozon anatomiyasi", "anatomiya_collection_12.csv"),
-    (13, "Anatomiya 13: Oshqozon boylamlari va Kalla suyagi", "anatomiya_collection_13.csv"),
-    (14, "Anatomiya 14: Peshona va Ensa suyaklari", "anatomiya_collection_14.csv"),
-    (15, "Anatomiya 15: Miya arteriyalari va Bo'ylama kesimi", "anatomiya_collection_15.csv"),
-    (16, "Anatomiya 16: Uzunchoq miya va Miya bo'laklari", "anatomiya_collection_16.csv"),
-    (17, "Anatomiya 17: Bosh miya yadrolari va Qorinchalari", "anatomiya_collection_17.csv"),
-    (18, "Anatomiya 18: Miyacha va Eshitish a'zolari", "anatomiya_collection_18.csv"),
+    (1, "1-rasm, 2-rasm", "Umurtqa va Dumg'aza suyaklari", "anatomiya_collection_01.csv"),
+    (2, "3-rasm, 4-rasm", "Umurtqa pog'onasi va Qo'l suyaklari", "anatomiya_collection_02.csv"),
+    (3, "5-rasm, 6-rasm", "Oyoq va Yelka suyaklari", "anatomiya_collection_03.csv"),
+    (4, "7-rasm, 8-rasm", "Son va Boldir suyaklari", "anatomiya_collection_04.csv"),
+    (5, "9-rasm, 10-rasm", "Chanoq suyagi va To'sh-o'mrov bo'g'imi", "anatomiya_collection_05.csv"),
+    (6, "11-rasm, 12-rasm", "Umurtqalararo boylamlar va Yelka bo'g'imi", "anatomiya_collection_06.csv"),
+    (7, "13-rasm, 14-rasm", "Chanoq-son va Tizza bo'g'imlari", "anatomiya_collection_07.csv"),
+    (8, "15-rasm, 16-rasm", "Ko'krak, qorin va orqa mushaklari", "anatomiya_collection_08.csv"),
+    (9, "17-rasm, 18-rasm", "Son va boldir mushaklari", "anatomiya_collection_09.csv"),
+    (10, "19-rasm, 20-rasm", "Qorin a'zolari va Qo'l mushaklari", "anatomiya_collection_10.csv"),
+    (11, "21-rasm, 22-rasm", "Hazm tizimi va Darvoza venasi", "anatomiya_collection_11.csv"),
+    (12, "23-rasm, 24-rasm", "Jigar va Oshqozon anatomiyasi", "anatomiya_collection_12.csv"),
+    (13, "25-rasm, 26-rasm", "Oshqozon boylamlari va Kalla suyagi", "anatomiya_collection_13.csv"),
+    (14, "27-rasm, 28-rasm", "Peshona va Ensa suyaklari", "anatomiya_collection_14.csv"),
+    (15, "29-rasm, 30-rasm", "Miya arteriyalari va Bo'ylama kesimi", "anatomiya_collection_15.csv"),
+    (16, "31-rasm, 32-rasm", "Uzunchoq miya va Miya bo'laklari", "anatomiya_collection_16.csv"),
+    (17, "33-rasm, 34-rasm", "Bosh miya yadrolari va Qorinchalari", "anatomiya_collection_17.csv"),
+    (18, "35-rasm, 36-rasm", "Miyacha va Eshitish a'zolari", "anatomiya_collection_18.csv"),
 ]
 
 async def apply_seeds(db: Database):
@@ -111,11 +111,39 @@ async def _seed_all_anatomy_collections(conn):
     admin_id = config.ADMIN_IDS[0] if config.ADMIN_IDS else 5606522749
     collections_dir = config.DATA_DIR / "anatomiya_collections"
 
-    for col_num, base_title, filename in ANATOMY_COLLECTIONS:
-        seed_key = f"seed_anatomiya_collection_{col_num:02d}_v1"
+    # Step 1: Clean up old duplicate sample test if present
+    await conn.execute("DELETE FROM quizzes WHERE title LIKE 'Anatomiya: Umurtqa va Dumg%aza suyaklari%'")
+
+    # Step 2: In-place update existing quizzes with new clean names
+    for col_num, clean_title, topic, filename in ANATOMY_COLLECTIONS:
+        await conn.execute(
+            """
+            UPDATE quizzes 
+            SET title = ?, description = ? 
+            WHERE title LIKE ? OR title LIKE ?
+            """,
+            (
+                clean_title,
+                f"{topic} mavzusidagi rentgen va anatomik rasmlar orqali tuzilmalarni aniqlash testi.",
+                f"Anatomiya {col_num}:%",
+                f"{clean_title} (% ta savol)"
+            )
+        )
+    await conn.commit()
+
+    # Step 3: Seed any collections that are not in database yet
+    for col_num, clean_title, topic, filename in ANATOMY_COLLECTIONS:
+        seed_key = f"seed_anatomiya_collection_{col_num:02d}_v2"
 
         async with conn.execute("SELECT seed_name FROM system_seeds WHERE seed_name = ?", (seed_key,)) as cursor:
             if await cursor.fetchone():
+                continue
+
+        # Check if quiz already exists
+        async with conn.execute("SELECT id FROM quizzes WHERE title = ?", (clean_title,)) as cursor:
+            if await cursor.fetchone():
+                await conn.execute("INSERT OR REPLACE INTO system_seeds (seed_name) VALUES (?)", (seed_key,))
+                await conn.commit()
                 continue
 
         csv_path = collections_dir / filename
@@ -140,19 +168,10 @@ async def _seed_all_anatomy_collections(conn):
                     "image": row.get("image", "").strip() or None
                 })
 
-        quiz_title = f"{base_title} ({len(questions_data)} ta savol)"
-
-        # Check if quiz already exists
-        async with conn.execute("SELECT id FROM quizzes WHERE title = ?", (quiz_title,)) as cursor:
-            if await cursor.fetchone():
-                await conn.execute("INSERT OR REPLACE INTO system_seeds (seed_name) VALUES (?)", (seed_key,))
-                await conn.commit()
-                continue
-
         quiz_id = await queries.create_quiz(
             conn,
-            title=quiz_title,
-            description=f"{base_title} mavzusidagi rentgen va anatomik rasmlar orqali tuzilmalarni aniqlash testi.",
+            title=clean_title,
+            description=f"{topic} mavzusidagi rentgen va anatomik rasmlar orqali tuzilmalarni aniqlash testi.",
             category="Anatomiya",
             default_timer=25,
             shuffle_options=True,
@@ -165,4 +184,4 @@ async def _seed_all_anatomy_collections(conn):
         inserted = await queries.bulk_insert_questions(conn, quiz_id, questions_data)
         await conn.execute("INSERT OR REPLACE INTO system_seeds (seed_name) VALUES (?)", (seed_key,))
         await conn.commit()
-        logger.info(f"Successfully seeded quiz ID {quiz_id} ('{quiz_title}') with {inserted} questions.")
+        logger.info(f"Successfully seeded quiz ID {quiz_id} ('{clean_title}') with {inserted} questions.")
