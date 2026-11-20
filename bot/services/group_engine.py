@@ -2,10 +2,12 @@ import asyncio
 import logging
 import time
 import random
+from pathlib import Path
 from typing import Dict, Optional, Any, List
 from aiogram import Bot
-from aiogram.types import CallbackQuery, PollAnswer
+from aiogram.types import CallbackQuery, PollAnswer, FSInputFile
 
+import config
 from bot.database.db import Database
 from bot.database import queries
 from bot.database.models import GroupCompetition, Question
@@ -165,12 +167,13 @@ class GroupQuizEngine:
         # Send question image if available
         if question.image_url:
             try:
-                from aiogram.types import FSInputFile
                 cached_id = _cached_file_ids.get(question.image_url)
                 if cached_id:
                     await self.bot.send_photo(chat_id=comp.chat_id, photo=cached_id)
                 else:
                     img_path = Path(question.image_url)
+                    if not img_path.is_absolute():
+                        img_path = config.BASE_DIR / img_path
                     if img_path.exists():
                         photo_msg = await self.bot.send_photo(chat_id=comp.chat_id, photo=FSInputFile(str(img_path)))
                         if photo_msg and photo_msg.photo:
