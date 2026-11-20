@@ -19,6 +19,10 @@ router.message.filter(F.chat.type.in_([ChatType.GROUP, ChatType.SUPERGROUP]))
 
 @router.message(Command("quiz"))
 async def handle_group_quiz_command(message: Message, command: CommandObject, db: Database, lang: str = "uz"):
+    if not config.can_share_quizzes(message.from_user.id):
+        await message.reply("⛔️ Kechirasiz, faqat ruxsat etilgan foydalanuvchilar guruhda test o'tkaza oladi." if lang == "uz" else "⛔️ Only authorized users can launch group quizzes.")
+        return
+
     args = command.args
     if not args or not args.isdigit():
         async with db.get_connection() as conn:
@@ -46,6 +50,10 @@ async def handle_group_quiz_command(message: Message, command: CommandObject, db
 @router.message(CommandStart())
 async def handle_group_start(message: Message, command: CommandObject, db: Database, lang: str = "uz"):
     """Handle deep links when bot is added to a group with ?startgroup=quiz_123."""
+    if not config.can_share_quizzes(message.from_user.id):
+        await message.reply("⛔️ Kechirasiz, faqat ruxsat etilgan foydalanuvchilar guruhda test o'tkaza oladi." if lang == "uz" else "⛔️ Only authorized users can launch group quizzes.")
+        return
+
     args = command.args
     if args and args.startswith("quiz_"):
         try:

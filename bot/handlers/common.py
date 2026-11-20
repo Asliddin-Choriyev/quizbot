@@ -1,4 +1,5 @@
 import logging
+import config
 from aiogram import Router, F
 from aiogram.filters import CommandStart, Command, CommandObject
 from aiogram.fsm.context import FSMContext
@@ -81,7 +82,8 @@ async def handle_start(message: Message, command: CommandObject, db: Database, l
                     pass_percentage=quiz.pass_percentage,
                     shuffle_status=t("enabled" if quiz.shuffle_options else "disabled", lang)
                 )
-                kb = get_quiz_landing_kb(quiz.id, bot_info.username, lang=lang)
+                can_share = config.can_share_quizzes(message.from_user.id)
+                kb = get_quiz_landing_kb(quiz.id, bot_info.username, lang=lang, can_share=can_share)
                 await message.answer(text, reply_markup=kb, parse_mode="HTML")
                 return
         except ValueError:
@@ -333,7 +335,8 @@ async def cb_quiz_view(callback: CallbackQuery, db: Database, lang: str = "uz", 
         pass_percentage=quiz.pass_percentage,
         shuffle_status=t("enabled" if quiz.shuffle_options else "disabled", lang)
     )
-    kb = get_quiz_landing_kb(quiz.id, bot_info.username, lang=lang)
+    can_share = config.can_share_quizzes(callback.from_user.id)
+    kb = get_quiz_landing_kb(quiz.id, bot_info.username, lang=lang, can_share=can_share)
     try:
         await callback.message.edit_text(text, reply_markup=kb, parse_mode="HTML")
     except Exception as e:
@@ -397,6 +400,17 @@ async def cb_quiz_leaderboard(callback: CallbackQuery, db: Database, lang: str =
 
 @router.inline_query()
 async def handle_inline_query(inline_query: InlineQuery, db: Database, lang: str = "uz"):
+    if not config.can_share_quizzes(inline_query.from_user.id):
+        switch_text = "⛔️ Testlarni ulashish faqat ruxsat etilganlar uchun" if lang == "uz" else "⛔️ Quiz sharing is restricted"
+        await inline_query.answer(
+            results=[],
+            cache_time=1,
+            is_personal=True,
+            switch_pm_text=switch_text,
+            switch_pm_parameter="restricted"
+        )
+        return
+
     query = inline_query.query.strip().lower()
     async with db.get_connection() as conn:
         quizzes = await queries.list_quizzes(conn, published_only=True, limit=20)
@@ -420,7 +434,6 @@ async def handle_inline_query(inline_query: InlineQuery, db: Database, lang: str
 
         start_text = "Bu testni boshlash" if lang == "uz" else "Start this quiz"
         group_text = "Guruhda testni boshlash" if lang == "uz" else "Start in Group"
-        share_text = "Testni ulashish" if lang == "uz" else "Share quiz"
 
         kb = InlineKeyboardMarkup(inline_keyboard=[
             [
@@ -428,9 +441,6 @@ async def handle_inline_query(inline_query: InlineQuery, db: Database, lang: str
             ],
             [
                 InlineKeyboardButton(text=group_text, url=f"https://t.me/{bot_name}?startgroup=quiz_{q.id}")
-            ],
-            [
-                InlineKeyboardButton(text=share_text, switch_inline_query=str(q.id))
             ]
         ])
 

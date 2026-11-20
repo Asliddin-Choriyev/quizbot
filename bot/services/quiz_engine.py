@@ -136,7 +136,7 @@ class QuizEngine:
             try:
                 cached_id = _cached_file_ids.get(question.image_url)
                 if cached_id:
-                    p_msg = await self.bot.send_photo(chat_id=session.chat_id, photo=cached_id)
+                    p_msg = await self.bot.send_photo(chat_id=session.chat_id, photo=cached_id, protect_content=True)
                     if p_msg:
                         photo_msg_id = p_msg.message_id
                 else:
@@ -144,12 +144,12 @@ class QuizEngine:
                     if not img_path.is_absolute():
                         img_path = config.BASE_DIR / img_path
                     if img_path.exists():
-                        photo_msg = await self.bot.send_photo(chat_id=session.chat_id, photo=FSInputFile(str(img_path)))
+                        photo_msg = await self.bot.send_photo(chat_id=session.chat_id, photo=FSInputFile(str(img_path)), protect_content=True)
                         if photo_msg and photo_msg.photo:
                             _cached_file_ids[question.image_url] = photo_msg.photo[-1].file_id
                             photo_msg_id = photo_msg.message_id
                     elif question.image_url.startswith(("http://", "https://")):
-                        photo_msg = await self.bot.send_photo(chat_id=session.chat_id, photo=question.image_url)
+                        photo_msg = await self.bot.send_photo(chat_id=session.chat_id, photo=question.image_url, protect_content=True)
                         if photo_msg and photo_msg.photo:
                             _cached_file_ids[question.image_url] = photo_msg.photo[-1].file_id
                             photo_msg_id = photo_msg.message_id
@@ -166,7 +166,8 @@ class QuizEngine:
                 explanation=exp_text,
                 open_period=timer,
                 is_anonymous=False,
-                reply_markup=get_quiz_in_progress_kb(session.id, lang=lang)
+                reply_markup=get_quiz_in_progress_kb(session.id, lang=lang),
+                protect_content=True
             )
         except Exception as e:
             logger.error(f"Error sending quiz poll: {e}")

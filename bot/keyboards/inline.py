@@ -78,7 +78,12 @@ def get_quiz_list_kb(quizzes: List[Quiz], page: int = 0, total_count: int = 0, p
     rows.append([InlineKeyboardButton(text=t("btn_back", lang), callback_data="main:menu")])
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
-def get_quiz_landing_kb(quiz_id: int, bot_username: str, lang: str = "uz") -> InlineKeyboardMarkup:
+def get_quiz_landing_kb(
+    quiz_id: int,
+    bot_username: str,
+    lang: str = "uz",
+    can_share: bool = False
+) -> InlineKeyboardMarkup:
     bot_name = bot_username or "quizzes_makerbot"
     group_link = f"https://t.me/{bot_name}?startgroup=quiz_{quiz_id}"
 
@@ -89,18 +94,21 @@ def get_quiz_landing_kb(quiz_id: int, bot_username: str, lang: str = "uz") -> In
     rows = [
         [
             InlineKeyboardButton(text=start_text, callback_data=f"quiz:start:{quiz_id}")
-        ],
-        [
-            InlineKeyboardButton(text=group_text, url=group_link)
-        ],
-        [
-            InlineKeyboardButton(text=share_text, switch_inline_query=str(quiz_id))
-        ],
-        [
-            InlineKeyboardButton(text=t("btn_leaderboard", lang), callback_data=f"quiz:leaderboard:{quiz_id}"),
-            InlineKeyboardButton(text=t("btn_back", lang), callback_data="quizzes:list:0")
         ]
     ]
+
+    if can_share:
+        rows.append([
+            InlineKeyboardButton(text=group_text, url=group_link)
+        ])
+        rows.append([
+            InlineKeyboardButton(text=share_text, switch_inline_query=str(quiz_id))
+        ])
+
+    rows.append([
+        InlineKeyboardButton(text=t("btn_leaderboard", lang), callback_data=f"quiz:leaderboard:{quiz_id}"),
+        InlineKeyboardButton(text=t("btn_back", lang), callback_data="quizzes:list:0")
+    ])
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
 # ==========================================

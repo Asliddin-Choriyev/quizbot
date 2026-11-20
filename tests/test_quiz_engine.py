@@ -210,4 +210,31 @@ async def test_quiz_engine_manual_pause(tmp_path: Path):
     send_msg_kwargs = mock_bot.send_message.call_args.kwargs
     assert "Pauza" in send_msg_kwargs.get("text", "") or "to'xtatildi" in send_msg_kwargs.get("text", "")
 
+def test_share_permissions_and_landing_kb():
+    import config
+    from bot.keyboards.inline import get_quiz_landing_kb
+
+    # Allowed IDs
+    assert config.can_share_quizzes(6250947707) is True
+    assert config.can_share_quizzes(5606522749) is True
+
+    # Unauthorized IDs
+    assert config.can_share_quizzes(123456789) is False
+    assert config.can_share_quizzes(999999999) is False
+    assert config.can_share_quizzes(None) is False
+
+    # Normal student landing keyboard (cannot share)
+    kb_student = get_quiz_landing_kb(quiz_id=1, bot_username="testbot", can_share=False)
+    student_callbacks = [btn.callback_data for row in kb_student.inline_keyboard for btn in row if btn.callback_data]
+    student_switches = [btn.switch_inline_query for row in kb_student.inline_keyboard for btn in row if btn.switch_inline_query is not None]
+    assert "quiz:start:1" in student_callbacks
+    assert len(student_switches) == 0  # No share button!
+
+    # Authorized user landing keyboard (can share)
+    kb_auth = get_quiz_landing_kb(quiz_id=1, bot_username="testbot", can_share=True)
+    auth_switches = [btn.switch_inline_query for row in kb_auth.inline_keyboard for btn in row if btn.switch_inline_query is not None]
+    assert len(auth_switches) == 1
+    assert auth_switches[0] == "1"
+
+
 

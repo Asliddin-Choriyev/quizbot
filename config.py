@@ -43,3 +43,18 @@ MAX_FILE_SIZE_MB = int(os.getenv("MAX_FILE_SIZE_MB", "50"))
 def is_admin(user_id: int) -> bool:
     """Check if a telegram user ID has administrator privileges."""
     return user_id in ADMIN_IDS
+
+# Allowed Share IDs: only these telegram users are allowed to share quizzes
+ALLOWED_SHARE_IDS: set[int] = {6250947707, 5606522749}
+share_ids_raw = os.getenv("ALLOWED_SHARE_IDS", "").strip()
+if share_ids_raw:
+    for uid in share_ids_raw.split(","):
+        uid = uid.strip()
+        if uid.isdigit():
+            ALLOWED_SHARE_IDS.add(int(uid))
+
+def can_share_quizzes(user_id: int | None) -> bool:
+    """Check if a telegram user ID is permitted to share quizzes."""
+    if not user_id:
+        return False
+    return user_id in ALLOWED_SHARE_IDS
