@@ -29,6 +29,13 @@ ANATOMY_COLLECTIONS = [
     (18, "35-rasm, 36-rasm", "Miyacha va Eshitish a'zolari", "anatomiya_collection_18.csv"),
 ]
 
+MIKROBIOLOGIYA_COLLECTIONS = [
+    (1, "Mikrobiologiya: 1-mavzu", "Mikrobiologiya fanidan 1-mavzu o'zlashtirish testi (1–100)", "mikrobiologiya_mavzu_01.csv"),
+    (2, "Mikrobiologiya: 2-mavzu", "Mikrobiologiya fanidan 2-mavzu o'zlashtirish testi (1–100)", "mikrobiologiya_mavzu_02.csv"),
+    (3, "Mikrobiologiya: 3-mavzu", "Mikrobiologiya fanidan 3-mavzu o'zlashtirish testi (1–100)", "mikrobiologiya_mavzu_03.csv"),
+    (4, "Mikrobiologiya: 4-mavzu", "Mikrobiologiya fanidan 4-mavzu o'zlashtirish testi (1–100)", "mikrobiologiya_mavzu_04.csv"),
+]
+
 async def apply_seeds(db: Database):
     """
     Applies system seeds once safely.
@@ -47,6 +54,7 @@ async def apply_seeds(db: Database):
 
         await _seed_oqsillar(conn)
         await _seed_all_anatomy_collections(conn)
+        await _seed_all_microbiology_collections(conn)
 
 async def _seed_oqsillar(conn):
     seed_key = "seed_oqsillar_85_v2"
@@ -173,6 +181,63 @@ async def _seed_all_anatomy_collections(conn):
             title=clean_title,
             description=f"{topic} mavzusidagi rentgen va anatomik rasmlar orqali tuzilmalarni aniqlash testi.",
             category="Anatomiya",
+            default_timer=25,
+            shuffle_options=True,
+            show_explanation=True,
+            pass_percentage=70,
+            is_published=True,
+            created_by=admin_id
+        )
+
+        inserted = await queries.bulk_insert_questions(conn, quiz_id, questions_data)
+        await conn.execute("INSERT OR REPLACE INTO system_seeds (seed_name) VALUES (?)", (seed_key,))
+        await conn.commit()
+        logger.info(f"Successfully seeded quiz ID {quiz_id} ('{clean_title}') with {inserted} questions.")
+
+async def _seed_all_microbiology_collections(conn):
+    admin_id = config.ADMIN_IDS[0] if config.ADMIN_IDS else 5606522749
+    collections_dir = config.DATA_DIR / "mikrobiologiya_collections"
+
+    for col_num, clean_title, description, filename in MIKROBIOLOGIYA_COLLECTIONS:
+        seed_key = f"seed_mikrobiologiya_mavzu_{col_num:02d}_v1"
+
+        async with conn.execute("SELECT seed_name FROM system_seeds WHERE seed_name = ?", (seed_key,)) as cursor:
+            if await cursor.fetchone():
+                continue
+
+        async with conn.execute("SELECT id FROM quizzes WHERE title = ?", (clean_title,)) as cursor:
+            if await cursor.fetchone():
+                await conn.execute("INSERT OR REPLACE INTO system_seeds (seed_name) VALUES (?)", (seed_key,))
+                await conn.commit()
+                continue
+
+        csv_path = collections_dir / filename
+        if not csv_path.exists():
+            continue
+
+        questions_data = []
+        with open(csv_path, mode="r", encoding="utf-8-sig") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                questions_data.append({
+                    "question": row["question"].strip(),
+                    "option_a": row["option_a"].strip(),
+                    "option_b": row["option_b"].strip(),
+                    "option_c": row["option_c"].strip(),
+                    "option_d": row["option_d"].strip(),
+                    "correct_answer": row["correct_answer"].strip().upper(),
+                    "explanation": row.get("explanation", "").strip(),
+                    "topic": row.get("topic", "").strip(),
+                    "difficulty": row.get("difficulty", "Medium").strip(),
+                    "timer": int(row.get("timer", 25)) if row.get("timer") else 25,
+                    "image": row.get("image", "").strip() or None
+                })
+
+        quiz_id = await queries.create_quiz(
+            conn,
+            title=clean_title,
+            description=description,
+            category="Mikrobiologiya",
             default_timer=25,
             shuffle_options=True,
             show_explanation=True,
