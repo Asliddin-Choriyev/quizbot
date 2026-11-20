@@ -433,14 +433,10 @@ async def handle_inline_query(inline_query: InlineQuery, db: Database, lang: str
         )
 
         start_text = "Bu testni boshlash" if lang == "uz" else "Start this quiz"
-        group_text = "Guruhda testni boshlash" if lang == "uz" else "Start in Group"
 
         kb = InlineKeyboardMarkup(inline_keyboard=[
             [
                 InlineKeyboardButton(text=start_text, url=f"https://t.me/{bot_name}?start=quiz_{q.id}")
-            ],
-            [
-                InlineKeyboardButton(text=group_text, url=f"https://t.me/{bot_name}?startgroup=quiz_{q.id}")
             ]
         ])
 
