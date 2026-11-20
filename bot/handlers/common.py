@@ -91,7 +91,8 @@ async def handle_start(message: Message, command: CommandObject, db: Database, l
 
     # Standard welcome
     text = t("welcome_title", lang)
-    kb = get_main_menu_kb(lang=lang, is_admin=is_admin)
+    can_share = config.can_share_quizzes(message.from_user.id)
+    kb = get_main_menu_kb(lang=lang, is_admin=is_admin, can_share=can_share)
     await message.answer(text, reply_markup=kb, parse_mode="HTML")
 
 @router.message(Command("help"))
@@ -104,6 +105,16 @@ async def handle_language_command(message: Message, lang: str = "uz"):
 
 @router.message(Command("quizzes"))
 async def handle_quizzes_command(message: Message, db: Database, lang: str = "uz"):
+    if not config.can_share_quizzes(message.from_user.id):
+        text = (
+            "🔒 <b>Testlar shaxsiy (private)</b>\n\n"
+            "Botdagi testlar ochiq ro'yxatda mavjud emas. Testlarni faqat o'qituvchi yuborgan maxsus havola (link) orqali ishlashingiz mumkin."
+            if lang == "uz" else
+            "🔒 <b>Quizzes are Private</b>\n\nQuizzes cannot be browsed publicly. You can only access a quiz via an official invitation link."
+        )
+        await message.answer(text, parse_mode="HTML")
+        return
+
     async with db.get_connection() as conn:
         quizzes = await queries.list_quizzes(conn, published_only=True, offset=0, limit=6)
         total = await queries.count_quizzes(conn, published_only=True)
@@ -185,7 +196,8 @@ async def process_profile_name(message: Message, state: FSMContext, lang: str = 
     if message.text and (message.text == t("btn_cancel", lang) or message.text.lower() in ("/cancel", "cancel")):
         await state.clear()
         await message.answer(t("profile_edit_cancelled", lang), reply_markup=ReplyKeyboardRemove(), parse_mode="HTML")
-        await message.answer(t("welcome_title", lang), reply_markup=get_main_menu_kb(lang=lang, is_admin=is_admin), parse_mode="HTML")
+        can_share = config.can_share_quizzes(message.from_user.id)
+        await message.answer(t("welcome_title", lang), reply_markup=get_main_menu_kb(lang=lang, is_admin=is_admin, can_share=can_share), parse_mode="HTML")
         return
 
     name = message.text.strip() if message.text else ""
@@ -207,7 +219,8 @@ async def process_profile_group(message: Message, state: FSMContext, lang: str =
     if message.text and (message.text == t("btn_cancel", lang) or message.text.lower() in ("/cancel", "cancel")):
         await state.clear()
         await message.answer(t("profile_edit_cancelled", lang), reply_markup=ReplyKeyboardRemove(), parse_mode="HTML")
-        await message.answer(t("welcome_title", lang), reply_markup=get_main_menu_kb(lang=lang, is_admin=is_admin), parse_mode="HTML")
+        can_share = config.can_share_quizzes(message.from_user.id)
+        await message.answer(t("welcome_title", lang), reply_markup=get_main_menu_kb(lang=lang, is_admin=is_admin, can_share=can_share), parse_mode="HTML")
         return
 
     group_val = None
@@ -228,7 +241,8 @@ async def process_profile_phone(message: Message, state: FSMContext, db: Databas
     if message.text and (message.text == t("btn_cancel", lang) or message.text.lower() in ("/cancel", "cancel")):
         await state.clear()
         await message.answer(t("profile_edit_cancelled", lang), reply_markup=ReplyKeyboardRemove(), parse_mode="HTML")
-        await message.answer(t("welcome_title", lang), reply_markup=get_main_menu_kb(lang=lang, is_admin=is_admin), parse_mode="HTML")
+        can_share = config.can_share_quizzes(message.from_user.id)
+        await message.answer(t("welcome_title", lang), reply_markup=get_main_menu_kb(lang=lang, is_admin=is_admin, can_share=can_share), parse_mode="HTML")
         return
 
     phone_val = None
@@ -264,7 +278,8 @@ async def process_profile_phone(message: Message, state: FSMContext, db: Databas
 @router.callback_query(F.data == "main:menu")
 async def cb_main_menu(callback: CallbackQuery, lang: str = "uz", is_admin: bool = False):
     text = t("welcome_title", lang)
-    kb = get_main_menu_kb(lang=lang, is_admin=is_admin)
+    can_share = config.can_share_quizzes(callback.from_user.id)
+    kb = get_main_menu_kb(lang=lang, is_admin=is_admin, can_share=can_share)
     try:
         await callback.message.edit_text(text, reply_markup=kb, parse_mode="HTML")
     except Exception:
@@ -284,7 +299,8 @@ async def cb_set_language(callback: CallbackQuery, db: Database, is_admin: bool 
 
     await callback.answer(t("language_changed", new_lang), show_alert=True)
     text = t("welcome_title", new_lang)
-    kb = get_main_menu_kb(lang=new_lang, is_admin=is_admin)
+    can_share = config.can_share_quizzes(callback.from_user.id)
+    kb = get_main_menu_kb(lang=new_lang, is_admin=is_admin, can_share=can_share)
     try:
         await callback.message.edit_text(text, reply_markup=kb, parse_mode="HTML")
     except Exception:
@@ -292,6 +308,13 @@ async def cb_set_language(callback: CallbackQuery, db: Database, is_admin: bool 
 
 @router.callback_query(F.data.startswith("quizzes:list:"))
 async def cb_quiz_list(callback: CallbackQuery, db: Database, lang: str = "uz"):
+    if not config.can_share_quizzes(callback.from_user.id):
+        await callback.answer(
+            "🔒 Testlar ro'yxati shaxsiy. Faqat havola orqali kirish mumkin.",
+            show_alert=True
+        )
+        return
+
     page = int(callback.data.split(":")[2])
     limit = 6
     offset = page * limit

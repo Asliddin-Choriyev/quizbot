@@ -8,17 +8,22 @@ from bot.database.models import QuestionOption, Quiz
 # COMMON KEYBOARDS
 # ==========================================
 
-def get_main_menu_kb(lang: str = "uz", is_admin: bool = False) -> InlineKeyboardMarkup:
-    buttons = [
-        [
+def get_main_menu_kb(lang: str = "uz", is_admin: bool = False, can_share: bool = False) -> InlineKeyboardMarkup:
+    buttons = []
+    if can_share:
+        buttons.append([
             InlineKeyboardButton(text=t("btn_browse_quizzes", lang), callback_data="quizzes:list:0"),
             InlineKeyboardButton(text=t("btn_my_results", lang), callback_data="user:results")
-        ],
-        [
-            InlineKeyboardButton(text=t("btn_my_profile", lang), callback_data="user:profile"),
-            InlineKeyboardButton(text="🌐 Til / Language", callback_data="user:language")
-        ]
-    ]
+        ])
+    else:
+        buttons.append([
+            InlineKeyboardButton(text=t("btn_my_results", lang), callback_data="user:results")
+        ])
+
+    buttons.append([
+        InlineKeyboardButton(text=t("btn_my_profile", lang), callback_data="user:profile"),
+        InlineKeyboardButton(text="🌐 Til / Language", callback_data="user:language")
+    ])
     if is_admin:
         buttons.append([
             InlineKeyboardButton(text=t("btn_admin_panel", lang), callback_data="adm:menu")
@@ -105,9 +110,11 @@ def get_quiz_landing_kb(
             InlineKeyboardButton(text=share_text, switch_inline_query=str(quiz_id))
         ])
 
+    back_cb = "quizzes:list:0" if can_share else "main:menu"
+    back_text = t("btn_back", lang) if can_share else ("🏠 Asosiy menyu" if lang == "uz" else "🏠 Main Menu")
     rows.append([
         InlineKeyboardButton(text=t("btn_leaderboard", lang), callback_data=f"quiz:leaderboard:{quiz_id}"),
-        InlineKeyboardButton(text=t("btn_back", lang), callback_data="quizzes:list:0")
+        InlineKeyboardButton(text=back_text, callback_data=back_cb)
     ])
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
@@ -139,7 +146,13 @@ def get_question_options_kb(
         ])
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
-def get_quiz_completed_kb(session_id: int, quiz_id: int, has_mistakes: bool = True, lang: str = "uz") -> InlineKeyboardMarkup:
+def get_quiz_completed_kb(
+    session_id: int,
+    quiz_id: int,
+    has_mistakes: bool = True,
+    lang: str = "uz",
+    can_share: bool = False
+) -> InlineKeyboardMarkup:
     rows = []
     if has_mistakes:
         rows.append([
@@ -149,9 +162,14 @@ def get_quiz_completed_kb(session_id: int, quiz_id: int, has_mistakes: bool = Tr
         InlineKeyboardButton(text=t("btn_retry_quiz", lang), callback_data=f"quiz:start:{quiz_id}"),
         InlineKeyboardButton(text=t("btn_leaderboard", lang), callback_data=f"quiz:leaderboard:{quiz_id}")
     ])
-    rows.append([
-        InlineKeyboardButton(text=t("btn_browse_quizzes", lang), callback_data="quizzes:list:0")
-    ])
+    if can_share:
+        rows.append([
+            InlineKeyboardButton(text=t("btn_browse_quizzes", lang), callback_data="quizzes:list:0")
+        ])
+    else:
+        rows.append([
+            InlineKeyboardButton(text="🏠 Asosiy menyu" if lang == "uz" else "🏠 Main Menu", callback_data="main:menu")
+        ])
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
 def get_quiz_in_progress_kb(session_id: int, lang: str = "uz") -> InlineKeyboardMarkup:

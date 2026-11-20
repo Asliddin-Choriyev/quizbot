@@ -242,6 +242,27 @@ def test_share_permissions_and_landing_kb():
     assert not any("startgroup" in url for url in all_student_urls)
     assert any("startgroup" in url for url in all_auth_urls)
 
+    # Main menu tests
+    from bot.keyboards.inline import get_main_menu_kb, get_quiz_completed_kb
+    menu_student = get_main_menu_kb(can_share=False)
+    menu_student_cbs = [btn.callback_data for row in menu_student.inline_keyboard for btn in row if btn.callback_data]
+    assert "quizzes:list:0" not in menu_student_cbs  # Quizzes list hidden for regular users
+
+    menu_auth = get_main_menu_kb(can_share=True)
+    menu_auth_cbs = [btn.callback_data for row in menu_auth.inline_keyboard for btn in row if btn.callback_data]
+    assert "quizzes:list:0" in menu_auth_cbs  # Quizzes list visible for authorized IDs
+
+    # Completed quiz keyboard tests
+    completed_student = get_quiz_completed_kb(session_id=1, quiz_id=1, can_share=False)
+    completed_student_cbs = [btn.callback_data for row in completed_student.inline_keyboard for btn in row if btn.callback_data]
+    assert "quizzes:list:0" not in completed_student_cbs
+    assert "main:menu" in completed_student_cbs
+
+    completed_auth = get_quiz_completed_kb(session_id=1, quiz_id=1, can_share=True)
+    completed_auth_cbs = [btn.callback_data for row in completed_auth.inline_keyboard for btn in row if btn.callback_data]
+    assert "quizzes:list:0" in completed_auth_cbs
+
+
 
 
 

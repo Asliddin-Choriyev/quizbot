@@ -462,7 +462,8 @@ class QuizEngine:
         )
 
         has_mistakes = (session.incorrect_count + session.unanswered_count) > 0
-        kb = get_quiz_completed_kb(session.id, session.quiz_id, has_mistakes=has_mistakes, lang=lang)
+        can_share = config.can_share_quizzes(session.user_id)
+        kb = get_quiz_completed_kb(session.id, session.quiz_id, has_mistakes=has_mistakes, lang=lang, can_share=can_share)
 
         await self.bot.send_message(
             chat_id=session.chat_id,

@@ -148,9 +148,16 @@ async def handle_review_mistakes(callback: CallbackQuery, db: Database, lang: st
         )
         blocks.append(f"<b>#{idx}</b> {block}")
 
+    import config
+    can_share = config.can_share_quizzes(callback.from_user.id)
+    nav_btn = (
+        InlineKeyboardButton(text="📚 Testlar ro'yxati", callback_data="quizzes:list:0")
+        if can_share else
+        InlineKeyboardButton(text="🏠 Asosiy menyu", callback_data="main:menu")
+    )
     kb = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="🔄 Qayta topshirish", callback_data=f"quiz:start:{session.quiz_id}")],
-        [InlineKeyboardButton(text="📚 Testlar ro'yxati", callback_data="quizzes:list:0")]
+        [nav_btn]
     ])
 
     await callback.message.answer("\n".join(blocks), reply_markup=kb, parse_mode="HTML")
