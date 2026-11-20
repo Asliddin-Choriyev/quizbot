@@ -115,12 +115,7 @@ async def main():
         logger.info("Bot stopped successfully.")
 
 if __name__ == "__main__":
-    while True:
-        try:
-            asyncio.run(main())
-        except (KeyboardInterrupt, SystemExit):
-            logger.info("Process terminated by user.")
-            break
-        except Exception as e:
-            logger.error(f"Bot crashed with error: {e}. Auto-restarting in 5 seconds...", exc_info=True)
-            time.sleep(5)
+    try:
+        asyncio.run(main())
+    except (KeyboardInterrupt, SystemExit):
+        logger.info("Process terminated by user.")
