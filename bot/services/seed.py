@@ -24,75 +24,123 @@ async def apply_seeds(db: Database):
         )
         await conn.commit()
 
-        # Check if 85-question quiz seed is already applied
-        async with conn.execute(
-            "SELECT seed_name FROM system_seeds WHERE seed_name = ?",
-            ("seed_oqsillar_85_v2",)
-        ) as cursor:
-            if await cursor.fetchone():
-                return
+        await _seed_oqsillar(conn)
+        await _seed_anatomiya_suyaklar(conn)
 
-        # Check if quiz already exists by title
-        async with conn.execute(
-            "SELECT id FROM quizzes WHERE title = ?",
-            ("Oqsillar almashinuvi — To'liq Imtihon (85 ta savol)",)
-        ) as cursor:
-            if await cursor.fetchone():
-                await conn.execute(
-                    "INSERT OR REPLACE INTO system_seeds (seed_name) VALUES (?)",
-                    ("seed_oqsillar_85_v2",)
-                )
-                await conn.commit()
-                return
+async def _seed_oqsillar(conn):
+    seed_key = "seed_oqsillar_85_v2"
+    quiz_title = "Oqsillar almashinuvi — To'liq Imtihon (85 ta savol)"
 
-        # Find CSV file
-        csv_path = config.DATA_DIR / "oqsillar_almashinuvi_85.csv"
-        if not csv_path.exists():
-            csv_path = config.TEMPLATES_DIR / "oqsillar_almashinuvi_85.csv"
-
-        if not csv_path.exists():
-            logger.warning(f"Seed CSV not found at {csv_path}")
+    async with conn.execute("SELECT seed_name FROM system_seeds WHERE seed_name = ?", (seed_key,)) as cursor:
+        if await cursor.fetchone():
             return
 
-        questions_data = []
-        with open(csv_path, mode="r", encoding="utf-8-sig") as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                questions_data.append({
-                    "question": row["question"].strip(),
-                    "option_a": row["option_a"].strip(),
-                    "option_b": row["option_b"].strip(),
-                    "option_c": row["option_c"].strip(),
-                    "option_d": row["option_d"].strip(),
-                    "correct_answer": row["correct_answer"].strip().upper(),
-                    "explanation": row.get("explanation", "").strip(),
-                    "topic": row.get("topic", "").strip(),
-                    "difficulty": row.get("difficulty", "Medium").strip(),
-                    "timer": int(row.get("timer", 25)) if row.get("timer") else 25,
-                    "image": None
-                })
+    async with conn.execute("SELECT id FROM quizzes WHERE title = ?", (quiz_title,)) as cursor:
+        if await cursor.fetchone():
+            await conn.execute("INSERT OR REPLACE INTO system_seeds (seed_name) VALUES (?)", (seed_key,))
+            await conn.commit()
+            return
 
-        admin_id = config.ADMIN_IDS[0] if config.ADMIN_IDS else 5606522749
-        quiz_id = await queries.create_quiz(
-            conn,
-            title="Oqsillar almashinuvi — To'liq Imtihon (85 ta savol)",
-            description="Oqsillar almashinuvi mavzusidagi barcha 85 ta savoldan iborat to'liq imtihon testi.",
-            category="Biokimyo",
-            default_timer=25,
-            shuffle_options=True,
-            show_explanation=True,
-            pass_percentage=70,
-            is_published=True,
-            created_by=admin_id
-        )
+    csv_path = config.DATA_DIR / "oqsillar_almashinuvi_85.csv"
+    if not csv_path.exists():
+        csv_path = config.TEMPLATES_DIR / "oqsillar_almashinuvi_85.csv"
 
-        inserted = await queries.bulk_insert_questions(conn, quiz_id, questions_data)
-        await conn.execute(
-            "INSERT OR REPLACE INTO system_seeds (seed_name) VALUES (?)",
-            ("seed_oqsillar_85_v2",)
-        )
-        await conn.commit()
-        logger.info(
-            f"Successfully seeded quiz ID {quiz_id} "
-            f"('Oqsillar almashinuvi — To'liq Imtihon (85 ta savol)') with {inserted} questions."
-        )
+    if not csv_path.exists():
+        logger.warning(f"Seed CSV not found at {csv_path}")
+        return
+
+    questions_data = []
+    with open(csv_path, mode="r", encoding="utf-8-sig") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            questions_data.append({
+                "question": row["question"].strip(),
+                "option_a": row["option_a"].strip(),
+                "option_b": row["option_b"].strip(),
+                "option_c": row["option_c"].strip(),
+                "option_d": row["option_d"].strip(),
+                "correct_answer": row["correct_answer"].strip().upper(),
+                "explanation": row.get("explanation", "").strip(),
+                "topic": row.get("topic", "").strip(),
+                "difficulty": row.get("difficulty", "Medium").strip(),
+                "timer": int(row.get("timer", 25)) if row.get("timer") else 25,
+                "image": row.get("image", "").strip() or None
+            })
+
+    admin_id = config.ADMIN_IDS[0] if config.ADMIN_IDS else 5606522749
+    quiz_id = await queries.create_quiz(
+        conn,
+        title=quiz_title,
+        description="Oqsillar almashinuvi mavzusidagi barcha 85 ta savoldan iborat to'liq imtihon testi.",
+        category="Biokimyo",
+        default_timer=25,
+        shuffle_options=True,
+        show_explanation=True,
+        pass_percentage=70,
+        is_published=True,
+        created_by=admin_id
+    )
+
+    inserted = await queries.bulk_insert_questions(conn, quiz_id, questions_data)
+    await conn.execute("INSERT OR REPLACE INTO system_seeds (seed_name) VALUES (?)", (seed_key,))
+    await conn.commit()
+    logger.info(f"Successfully seeded quiz ID {quiz_id} ('{quiz_title}') with {inserted} questions.")
+
+async def _seed_anatomiya_suyaklar(conn):
+    seed_key = "seed_anatomiya_suyaklar_13_v1"
+    quiz_title = "Anatomiya: Umurtqa va Dumg'aza suyaklari (13 ta savol)"
+
+    async with conn.execute("SELECT seed_name FROM system_seeds WHERE seed_name = ?", (seed_key,)) as cursor:
+        if await cursor.fetchone():
+            return
+
+    async with conn.execute("SELECT id FROM quizzes WHERE title = ?", (quiz_title,)) as cursor:
+        if await cursor.fetchone():
+            await conn.execute("INSERT OR REPLACE INTO system_seeds (seed_name) VALUES (?)", (seed_key,))
+            await conn.commit()
+            return
+
+    csv_path = config.DATA_DIR / "anatomiya_suyaklar_13.csv"
+    if not csv_path.exists():
+        csv_path = config.TEMPLATES_DIR / "anatomiya_suyaklar_13.csv"
+
+    if not csv_path.exists():
+        logger.warning(f"Seed CSV not found at {csv_path}")
+        return
+
+    questions_data = []
+    with open(csv_path, mode="r", encoding="utf-8-sig") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            questions_data.append({
+                "question": row["question"].strip(),
+                "option_a": row["option_a"].strip(),
+                "option_b": row["option_b"].strip(),
+                "option_c": row["option_c"].strip(),
+                "option_d": row["option_d"].strip(),
+                "correct_answer": row["correct_answer"].strip().upper(),
+                "explanation": row.get("explanation", "").strip(),
+                "topic": row.get("topic", "").strip(),
+                "difficulty": row.get("difficulty", "Medium").strip(),
+                "timer": int(row.get("timer", 25)) if row.get("timer") else 25,
+                "image": row.get("image", "").strip() or None
+            })
+
+    admin_id = config.ADMIN_IDS[0] if config.ADMIN_IDS else 5606522749
+    quiz_id = await queries.create_quiz(
+        conn,
+        title=quiz_title,
+        description="Rentgen va anatomik rasmlar orqali umurtqa (vertebra) va dumg'aza (sacrum) suyaklari tuzilishini aniqlash testi.",
+        category="Anatomiya",
+        default_timer=25,
+        shuffle_options=True,
+        show_explanation=True,
+        pass_percentage=70,
+        is_published=True,
+        created_by=admin_id
+    )
+
+    inserted = await queries.bulk_insert_questions(conn, quiz_id, questions_data)
+    await conn.execute("INSERT OR REPLACE INTO system_seeds (seed_name) VALUES (?)", (seed_key,))
+    await conn.commit()
+    logger.info(f"Successfully seeded quiz ID {quiz_id} ('{quiz_title}') with {inserted} questions.")

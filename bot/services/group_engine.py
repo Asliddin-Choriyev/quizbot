@@ -21,6 +21,8 @@ _active_group_polls: Dict[str, Dict[str, Any]] = {}
 _active_group_timers: Dict[int, asyncio.Task] = {}
 # Active competition current poll mapping: comp_id -> (poll_id, message_id)
 _active_comp_polls: Dict[int, tuple[str, int]] = {}
+# Cached Telegram file IDs for images: image_path -> file_id
+_cached_file_ids: Dict[str, str] = {}
 
 def cancel_group_timer(comp_id: int):
     task = _active_group_timers.pop(comp_id, None)
@@ -159,6 +161,26 @@ class GroupQuizEngine:
 
         opt_texts = [opt.option_text[:100] for opt in options]
         exp_text = (question.explanation or "")[:200] if quiz.show_explanation else None
+
+        # Send question image if available
+        if question.image_url:
+            try:
+                from aiogram.types import FSInputFile
+                cached_id = _cached_file_ids.get(question.image_url)
+                if cached_id:
+                    await self.bot.send_photo(chat_id=comp.chat_id, photo=cached_id)
+                else:
+                    img_path = Path(question.image_url)
+                    if img_path.exists():
+                        photo_msg = await self.bot.send_photo(chat_id=comp.chat_id, photo=FSInputFile(str(img_path)))
+                        if photo_msg and photo_msg.photo:
+                            _cached_file_ids[question.image_url] = photo_msg.photo[-1].file_id
+                    elif question.image_url.startswith(("http://", "https://")):
+                        photo_msg = await self.bot.send_photo(chat_id=comp.chat_id, photo=question.image_url)
+                        if photo_msg and photo_msg.photo:
+                            _cached_file_ids[question.image_url] = photo_msg.photo[-1].file_id
+            except Exception as e:
+                logger.warning(f"Error sending group question image: {e}")
 
         try:
             poll_msg = await self.bot.send_poll(

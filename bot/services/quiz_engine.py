@@ -21,6 +21,8 @@ _active_individual_polls: Dict[str, Dict[str, Any]] = {}
 _active_session_timers: Dict[str, asyncio.Task] = {}
 # Consecutive timeouts counter: session_code -> count
 _consecutive_timeouts: Dict[str, int] = {}
+# Cached Telegram file IDs for images: image_path -> file_id
+_cached_file_ids: Dict[str, str] = {}
 
 def cancel_session_timer(session_code: str):
     task = _active_session_timers.pop(session_code, None)
@@ -125,6 +127,26 @@ class QuizEngine:
             exp_text = question.explanation.strip()
             if len(exp_text) > 200:
                 exp_text = exp_text[:197] + "..."
+
+        # Send question image if available
+        if question.image_url:
+            try:
+                from aiogram.types import FSInputFile
+                cached_id = _cached_file_ids.get(question.image_url)
+                if cached_id:
+                    await self.bot.send_photo(chat_id=session.chat_id, photo=cached_id)
+                else:
+                    img_path = Path(question.image_url)
+                    if img_path.exists():
+                        photo_msg = await self.bot.send_photo(chat_id=session.chat_id, photo=FSInputFile(str(img_path)))
+                        if photo_msg and photo_msg.photo:
+                            _cached_file_ids[question.image_url] = photo_msg.photo[-1].file_id
+                    elif question.image_url.startswith(("http://", "https://")):
+                        photo_msg = await self.bot.send_photo(chat_id=session.chat_id, photo=question.image_url)
+                        if photo_msg and photo_msg.photo:
+                            _cached_file_ids[question.image_url] = photo_msg.photo[-1].file_id
+            except Exception as e:
+                logger.warning(f"Error sending quiz question image: {e}")
 
         try:
             poll_msg = await self.bot.send_poll(
