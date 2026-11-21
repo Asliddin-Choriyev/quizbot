@@ -532,12 +532,13 @@ async def bulk_insert_questions(
             q_id = q_cursor.lastrowid
             correct_label = str(item.get("correct_answer", "")).strip().upper()
 
-            options_to_insert = [
-                (q_id, "A", item["option_a"], 1 if correct_label == "A" else 0),
-                (q_id, "B", item["option_b"], 1 if correct_label == "B" else 0),
-                (q_id, "C", item["option_c"], 1 if correct_label == "C" else 0),
-                (q_id, "D", item["option_d"], 1 if correct_label == "D" else 0),
-            ]
+            options_to_insert = []
+            for lbl, opt_key in [("A", "option_a"), ("B", "option_b"), ("C", "option_c"), ("D", "option_d")]:
+                val = item.get(opt_key)
+                if val is not None and str(val).strip():
+                    options_to_insert.append(
+                        (q_id, lbl, str(val).strip(), 1 if correct_label == lbl else 0)
+                    )
             await conn.executemany(
                 """
                 INSERT INTO question_options (question_id, option_label, option_text, is_correct)
