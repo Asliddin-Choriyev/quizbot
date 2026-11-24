@@ -415,17 +415,11 @@ async def _seed_biochemistry_true_false(conn):
     logger.info(f"Successfully seeded quiz ID {quiz_id} ('{quiz_title}') with {inserted} questions.")
 
 async def _seed_biochemistry_variantli(conn):
-    seed_key = "seed_biokimyo_variantli_209_v1"
+    seed_key = "seed_biokimyo_variantli_278_v2"
     quiz_title = "biokimyo variantli"
 
     async with conn.execute("SELECT seed_name FROM system_seeds WHERE seed_name = ?", (seed_key,)) as cursor:
         if await cursor.fetchone():
-            return
-
-    async with conn.execute("SELECT id FROM quizzes WHERE title = ?", (quiz_title,)) as cursor:
-        if await cursor.fetchone():
-            await conn.execute("INSERT OR REPLACE INTO system_seeds (seed_name) VALUES (?)", (seed_key,))
-            await conn.commit()
             return
 
     csv_path = config.DATA_DIR / "biokimyo_collections" / "biokimyo_variantli_209.csv"
@@ -452,18 +446,41 @@ async def _seed_biochemistry_variantli(conn):
                 "image": row.get("image", "").strip() or None
             })
 
-    quiz_id = await queries.create_quiz(
-        conn,
-        title=quiz_title,
-        description="Biokimyo fanidan variantli test savollari to'plami (209 ta savol).",
-        category="Biokimyo",
-        default_timer=25,
-        shuffle_options=True,
-        show_explanation=True,
-        pass_percentage=70,
-        is_published=True,
-        created_by=admin_id
-    )
+    existing_quiz_id = None
+    async with conn.execute("SELECT id FROM quizzes WHERE title = ?", (quiz_title,)) as cursor:
+        row = await cursor.fetchone()
+        if row:
+            existing_quiz_id = row[0]
+
+    if existing_quiz_id:
+        await conn.execute(
+            """
+            UPDATE quizzes
+            SET description = ?
+            WHERE id = ?
+            """,
+            (
+                "Biokimyo fanidan variantli test savollari to'plami (278 ta savol).",
+                existing_quiz_id
+            )
+        )
+        await conn.execute("DELETE FROM question_options WHERE question_id IN (SELECT id FROM questions WHERE quiz_id = ?)", (existing_quiz_id,))
+        await conn.execute("DELETE FROM questions WHERE quiz_id = ?", (existing_quiz_id,))
+        await conn.commit()
+        quiz_id = existing_quiz_id
+    else:
+        quiz_id = await queries.create_quiz(
+            conn,
+            title=quiz_title,
+            description="Biokimyo fanidan variantli test savollari to'plami (278 ta savol).",
+            category="Biokimyo",
+            default_timer=25,
+            shuffle_options=True,
+            show_explanation=True,
+            pass_percentage=70,
+            is_published=True,
+            created_by=admin_id
+        )
 
     inserted = await queries.bulk_insert_questions(conn, quiz_id, questions_data)
     await conn.execute("INSERT OR REPLACE INTO system_seeds (seed_name) VALUES (?)", (seed_key,))
