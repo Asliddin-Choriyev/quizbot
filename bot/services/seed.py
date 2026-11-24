@@ -40,6 +40,7 @@ MIKROBIOLOGIYA_COLLECTIONS = [
     (8, "Mikrobiologiya: 8-mavzu", "Mikrobiologiya fanidan 8-mavzu o'zlashtirish testi (1–105)", "mikrobiologiya_mavzu_08.csv"),
     (9, "Mikrobiologiya: 9-mavzu", "Mikrobiologiya fanidan 9-mavzu o'zlashtirish testi (1–100)", "mikrobiologiya_mavzu_09.csv"),
     (10, "Mikrobiologiya: 10-mavzu", "Mikrobiologiya fanidan 10-mavzu o'zlashtirish testi (1–100)", "mikrobiologiya_mavzu_10.csv"),
+    (11, "Mikrobiologiya: 11-mavzu", "Mikrobiologiya fanidan 11-mavzu o'zlashtirish testi (1–105)", "mikrobiologiya_mavzu_11.csv"),
 ]
 
 async def apply_seeds(db: Database):
