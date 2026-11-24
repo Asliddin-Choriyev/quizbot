@@ -44,6 +44,21 @@ MIKROBIOLOGIYA_COLLECTIONS = [
     (12, "Mikrobiologiya: 12-mavzu", "Mikrobiologiya fanidan 12-mavzu o'zlashtirish testi (1–100)", "mikrobiologiya_mavzu_12.csv"),
 ]
 
+FIZIOLOGIYA_COLLECTIONS = [
+    (1, "Normal fiziologiya: 1-mavzu", "Normal fiziologiya fanidan 1-mavzu: Fiziologiya faniga kirish (1–100)", "fiziologiya_mavzu_01.csv"),
+    (2, "Normal fiziologiya: 2-mavzu", "Normal fiziologiya fanidan 2-mavzu: Membrana potensiali va qo'zg'aluvchan to'qimalar (1–100)", "fiziologiya_mavzu_02.csv"),
+    (3, "Normal fiziologiya: 3-mavzu", "Normal fiziologiya fanidan 3-mavzu: Muskul fiziologiyasi (1–100)", "fiziologiya_mavzu_03.csv"),
+    (4, "Normal fiziologiya: 4-mavzu", "Normal fiziologiya fanidan 4-mavzu: Nerv tolalari va sinapslar (1–100)", "fiziologiya_mavzu_04.csv"),
+    (5, "Normal fiziologiya: 5-mavzu", "Normal fiziologiya fanidan 5-mavzu: Qon plazmasi va eritrotsitlar (1–100)", "fiziologiya_mavzu_05.csv"),
+    (6, "Normal fiziologiya: 6-mavzu", "Normal fiziologiya fanidan 6-mavzu: Leykotsitlar va qon guruhlari (1–100)", "fiziologiya_mavzu_06.csv"),
+    (7, "Normal fiziologiya: 7-mavzu", "Normal fiziologiya fanidan 7-mavzu: Gemostaz va trombotsitlar (1–100)", "fiziologiya_mavzu_07.csv"),
+    (8, "Normal fiziologiya: 8-mavzu", "Normal fiziologiya fanidan 8-mavzu: Yurak mushaklari va avtomatiya (1–90)", "fiziologiya_mavzu_08.csv"),
+    (9, "Normal fiziologiya: 9-mavzu", "Normal fiziologiya fanidan 9-mavzu: Yurak boshqarilishi (1–90)", "fiziologiya_mavzu_09.csv"),
+    (10, "Normal fiziologiya: 10-mavzu", "Normal fiziologiya fanidan 10-mavzu: Mikrosirkulyatsiya va qon bosimi (1–90)", "fiziologiya_mavzu_10.csv"),
+    (11, "Normal fiziologiya: 11-mavzu", "Normal fiziologiya fanidan 11-mavzu: Nafas fiziologiyasi (1–90)", "fiziologiya_mavzu_11.csv"),
+    (12, "Normal fiziologiya: 12-mavzu", "Normal fiziologiya fanidan 12-mavzu: Nafas boshqarilishi (1–90)", "fiziologiya_mavzu_12.csv"),
+]
+
 async def apply_seeds(db: Database):
     """
     Applies system seeds once safely.
@@ -63,6 +78,7 @@ async def apply_seeds(db: Database):
         await _seed_oqsillar(conn)
         await _seed_all_anatomy_collections(conn)
         await _seed_all_microbiology_collections(conn)
+        await _seed_all_physiology_collections(conn)
         await _seed_biochemistry_true_false(conn)
         await _seed_biochemistry_variantli(conn)
 
@@ -248,6 +264,63 @@ async def _seed_all_microbiology_collections(conn):
             title=clean_title,
             description=description,
             category="Mikrobiologiya",
+            default_timer=25,
+            shuffle_options=True,
+            show_explanation=True,
+            pass_percentage=70,
+            is_published=True,
+            created_by=admin_id
+        )
+
+        inserted = await queries.bulk_insert_questions(conn, quiz_id, questions_data)
+        await conn.execute("INSERT OR REPLACE INTO system_seeds (seed_name) VALUES (?)", (seed_key,))
+        await conn.commit()
+        logger.info(f"Successfully seeded quiz ID {quiz_id} ('{clean_title}') with {inserted} questions.")
+
+async def _seed_all_physiology_collections(conn):
+    admin_id = config.ADMIN_IDS[0] if config.ADMIN_IDS else 5606522749
+    collections_dir = config.DATA_DIR / "fiziologiya_collections"
+
+    for col_num, clean_title, description, filename in FIZIOLOGIYA_COLLECTIONS:
+        seed_key = f"seed_fiziologiya_mavzu_{col_num:02d}_v1"
+
+        async with conn.execute("SELECT seed_name FROM system_seeds WHERE seed_name = ?", (seed_key,)) as cursor:
+            if await cursor.fetchone():
+                continue
+
+        async with conn.execute("SELECT id FROM quizzes WHERE title = ?", (clean_title,)) as cursor:
+            if await cursor.fetchone():
+                await conn.execute("INSERT OR REPLACE INTO system_seeds (seed_name) VALUES (?)", (seed_key,))
+                await conn.commit()
+                continue
+
+        csv_path = collections_dir / filename
+        if not csv_path.exists():
+            continue
+
+        questions_data = []
+        with open(csv_path, mode="r", encoding="utf-8-sig") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                questions_data.append({
+                    "question": row["question"].strip(),
+                    "option_a": row["option_a"].strip(),
+                    "option_b": row["option_b"].strip(),
+                    "option_c": row["option_c"].strip(),
+                    "option_d": row["option_d"].strip(),
+                    "correct_answer": row["correct_answer"].strip().upper(),
+                    "explanation": row.get("explanation", "").strip(),
+                    "topic": row.get("topic", "").strip(),
+                    "difficulty": row.get("difficulty", "Medium").strip(),
+                    "timer": int(row.get("timer", 25)) if row.get("timer") else 25,
+                    "image": row.get("image", "").strip() or None
+                })
+
+        quiz_id = await queries.create_quiz(
+            conn,
+            title=clean_title,
+            description=description,
+            category="Normal fiziologiya",
             default_timer=25,
             shuffle_options=True,
             show_explanation=True,
